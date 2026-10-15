@@ -4,37 +4,32 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>404 — Alfie Radcliffe</title>
+<link rel="icon" type="image/png" href="/assets/alfie-head.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono&family=Pixelify+Sans:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/theme.css">
 <script src="/sprite.js"></script>
 <style>
-  :root { --ink: #1b1430; }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { min-height: 100vh; display: grid; place-items: center; padding: 24px 16px 90px; color: var(--ink);
-    font: 16px/1.6 Inter, system-ui, sans-serif; background: linear-gradient(180deg, #6cc8ff 0%, #c9eeff 80%); }
-  .ground { position: fixed; left: 0; right: 0; bottom: 0; height: 56px; border-top: 3px solid var(--ink);
-    background: #3ddc97 repeating-linear-gradient(90deg, #3ddc97 0 24px, #22b574 24px 32px, #3ddc97 32px 56px) top / 56px 12px repeat-x; }
-  .box { text-align: center; display: grid; justify-items: center; gap: 16px; }
-  .alfie { padding-right: 150px; }
-  h1 { font: 700 clamp(60px, 14vw, 120px)/1 "Pixelify Sans", monospace; color: #fff; -webkit-text-stroke: 4px var(--ink); paint-order: stroke fill; text-shadow: 6px 6px 0 var(--ink); }
-  .err { font: 13px "JetBrains Mono", monospace; background: #17122b; color: #ff6b7a; border: 3px solid var(--ink); border-radius: 10px; padding: 8px 14px; box-shadow: 4px 4px 0 var(--ink); }
-  .btns { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
-  .btn { font: 700 16px "Pixelify Sans", monospace; padding: 10px 18px; border: 3px solid var(--ink); border-radius: 10px; box-shadow: 4px 4px 0 var(--ink); color: var(--ink); background: #ffd23f; text-decoration: none; }
-  .btn.alt { background: #fff; }
-  .btn:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--ink); }
+  body { display: grid; place-items: center; padding: 30px 16px 40px; }
+  .box { display: grid; justify-items: center; gap: 14px; text-align: center; }
+  .me { padding-right: 190px; }
+  h1 { font: 400 clamp(70px, 14vw, 130px)/1 var(--scrawl); color: var(--pen-red); transform: rotate(-4deg); }
+  .err { font: 18px var(--type); }
+  .err s { text-decoration: line-through 2.5px var(--pen-red); color: var(--pencil); }
+  .note { font: 24px var(--note); color: var(--pencil); }
+  @media (max-width: 520px) { .me { padding-right: 120px; } }
 </style>
 </head>
 <body>
   <div class="box">
-    <div class="alfie" data-alfie data-alfie-scale="8" data-alfie-say="Uh oh… I can't find that page 😵"></div>
+    <div class="me" data-alfie data-alfie-scale="11" data-alfie-say="uh oh… where did that page go?"></div>
     <h1>404</h1>
-    <div class="err">Segmentation fault (core dumped): page not found</div>
-    <div class="btns">
-      <a class="btn" href="/">Back to the portfolio</a>
-      <a class="btn alt" href="/terminal.html">&gt;_ Open terminal</a>
+    <div class="err"><s>page found</s> Segmentation fault (core dumped)</div>
+    <p class="note">this page doesn't exist, or I scribbled it out</p>
+    <div class="btns" style="justify-content:center">
+      <a class="btn yellow" href="/">back to the portfolio</a>
+      <a class="btn" href="/terminal.html">&gt;_ open terminal</a>
     </div>
   </div>
-  <div class="ground" aria-hidden="true"></div>
 </body>
 </html>

@@ -9,192 +9,121 @@
 <meta property="og:description" content="Computer Science student at Newcastle University seeking a 12-month industrial placement for 2027–28.">
 <meta property="og:url" content="https://alfieradcliffe.github.io/">
 <meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23ff4d5e'/><text x='32' y='42' font-family='Arial' font-weight='700' font-size='28' fill='white' text-anchor='middle'>AR</text></svg>">
+<link rel="icon" type="image/png" href="assets/alfie-head.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Pixelify+Sans:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme.css">
 <script src="projects.js"></script>
 <script src="sprite.js"></script>
 <style>
-  /* ============================================================
-     AlfieOS theme — bright, chunky, pixel-flavoured
-     ============================================================ */
-  :root {
-    --bg: #fff6e5;
-    --card: #ffffff;
-    --ink: #1b1430;
-    --muted: #4f4866;
-    --blue: #2f6bff;
-    --red: #ff4d5e;
-    --yellow: #ffd23f;
-    --mint: #3ddc97;
-    --pink: #ff8fd8;
-    --sky1: #6cc8ff;
-    --sky2: #c9eeff;
-    --grass: #3ddc97;
-    --grass-dark: #22b574;
-    --radius: 14px;
-    --shadow: 6px 6px 0 var(--ink);
-    --max: 1080px;
-    --pixel: "Pixelify Sans", "JetBrains Mono", monospace;
+  /* ---------- Top strip ---------- */
+  nav { position: sticky; top: 0; z-index: 20; background: rgba(253,251,243,.94); border-bottom: 2.5px dashed var(--ink); }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; gap: 12px; }
+  nav .logo { display: flex; align-items: center; gap: 8px; font: 400 21px var(--scrawl); color: var(--ink); text-decoration: none; }
+  nav .logo img { width: 40px; height: 35px; filter: url(#alfie-boil); }
+  nav ul { display: flex; gap: 20px; list-style: none; align-items: center; }
+  nav ul a { color: var(--ink); font: 700 24px var(--hand); text-decoration: none; }
+  nav ul a:hover { color: var(--pen-red); text-decoration: underline wavy 2px; }
+  nav .term-link { background: var(--hl-yellow); padding: 0 10px; border: 2px solid var(--ink); border-radius: var(--wobbly); }
+  nav .clock { font: 400 18px var(--type); color: var(--pencil); }
+  @media (max-width: 780px) { nav .hide-sm { display: none; } }
+
+  /* ---------- Hero ---------- */
+  header.hero { position: relative; padding: 56px 0 30px; overflow: hidden; }
+  .hero .wrap { display: grid; grid-template-columns: 1.3fr 1fr; gap: 28px; align-items: center; }
+  @media (max-width: 880px) { .hero .wrap { grid-template-columns: 1fr; } }
+  .hero .sheet { transform: rotate(-1deg); }
+  .status { display: inline-block; font: 700 21px var(--note); padding: 0 10px; border: 2px solid var(--pen-red); color: var(--pen-red); border-radius: var(--wobbly-2); transform: rotate(-2deg); margin-bottom: 14px; }
+  h1 { font: 700 clamp(46px, 7vw, 78px)/1.04 var(--hand); }
+  h1 .name { font: 400 clamp(38px, 5.4vw, 60px)/1 var(--scrawl); color: var(--pen-red); }
+  .lede { font-size: 21px; color: var(--pencil); max-width: 560px; margin: 16px 0 22px; }
+  .stage { position: relative; min-height: 420px; display: flex; align-items: flex-end; justify-content: center; }
+  .stage .me { position: relative; z-index: 2; margin-bottom: 18px; }
+  .stage .ground { position: absolute; bottom: 10px; left: 6%; width: 88%; height: 30px; }
+  .thats-me { position: absolute; left: 0; top: 50px; font: 700 26px var(--note); color: var(--pen-red); transform: rotate(-8deg); }
+  @media (max-width: 880px) { .stage { min-height: 380px; } .thats-me { left: 4px; top: 10px; } }
+  @media (max-width: 560px) {
+    .stage { justify-content: flex-start; }
+    .stage .me { margin-left: 4px; }
+    .stage .doodle:not(.ground), .thats-me { display: none; }
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body { background: var(--bg); color: var(--ink); font: 16px/1.65 Inter, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
-  a { color: var(--blue); text-decoration-thickness: 2px; text-underline-offset: 3px; }
-  .mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
-  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 16px; }
 
-  /* ---------- Menu bar (OS style) ---------- */
-  nav { position: sticky; top: 0; z-index: 20; background: var(--yellow); border-bottom: 3px solid var(--ink); }
-  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 54px; gap: 12px; }
-  nav .logo { display: flex; align-items: center; gap: 8px; font: 700 20px var(--pixel); color: var(--ink); text-decoration: none; }
-  nav .logo img { width: 30px; height: 30px; image-rendering: pixelated; }
-  nav ul { display: flex; gap: 18px; list-style: none; align-items: center; }
-  nav ul a { color: var(--ink); font: 500 16px var(--pixel); text-decoration: none; }
-  nav ul a:hover { color: var(--red); }
-  nav .term-link { background: var(--ink); color: var(--yellow); padding: 4px 10px; border-radius: 8px; }
-  nav .term-link:hover { color: var(--mint); }
-  nav .clock { font: 500 15px var(--pixel); }
-  @media (max-width: 760px) { nav .hide-sm { display: none; } }
+  /* ---------- Stats as sticky notes ---------- */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 26px; margin-top: 24px; }
+  .stats .sticky:nth-child(1) { transform: rotate(-2deg); } .stats .sticky:nth-child(2) { transform: rotate(1.5deg); } .stats .sticky:nth-child(3) { transform: rotate(-1deg); }
+  .stats b { display: block; font: 400 30px var(--scrawl); line-height: 1.3; }
+  .stats small { font-size: 21px; }
 
-  /* ---------- Hero: the desktop wallpaper ---------- */
-  .wallpaper { position: relative; overflow: hidden; border-bottom: 3px solid var(--ink);
-    background: linear-gradient(180deg, var(--sky1) 0%, var(--sky2) 78%); }
-  .sun { position: absolute; top: 40px; right: 8%; width: 84px; height: 84px; background: var(--yellow);
-    box-shadow: 0 0 0 8px rgba(255,210,63,.35), 0 0 0 16px rgba(255,210,63,.15); image-rendering: pixelated;
-    clip-path: polygon(25% 0,75% 0,75% 12%,88% 12%,88% 25%,100% 25%,100% 75%,88% 75%,88% 88%,75% 88%,75% 100%,25% 100%,25% 88%,12% 88%,12% 75%,0 75%,0 25%,12% 25%,12% 12%,25% 12%); }
-  .cloud { position: absolute; height: 28px; background: #fff; animation: drift linear infinite; opacity: .95;
-    clip-path: polygon(0 50%,12% 50%,12% 25%,30% 25%,30% 0,62% 0,62% 25%,80% 25%,80% 50%,100% 50%,100% 100%,0 100%); }
-  .cloud.c1 { width: 120px; top: 60px; animation-duration: 60s; animation-delay: -10s; }
-  .cloud.c2 { width: 90px; top: 150px; animation-duration: 80s; animation-delay: -45s; }
-  .cloud.c3 { width: 150px; top: 250px; animation-duration: 95s; animation-delay: -70s; }
-  @keyframes drift { from { left: -180px; } to { left: 100%; } }
-  .ground { position: absolute; left: 0; right: 0; bottom: 0; height: 56px; background: var(--grass);
-    border-top: 3px solid var(--ink);
-    background-image: repeating-linear-gradient(90deg, var(--grass) 0 24px, var(--grass-dark) 24px 32px, var(--grass) 32px 56px); background-size: 56px 12px; background-repeat: repeat-x; }
-  .hero { position: relative; z-index: 1; display: grid; grid-template-columns: 1.35fr 1fr; gap: 24px; align-items: end; padding-top: 56px; }
-  @media (max-width: 860px) { .hero { grid-template-columns: 1fr; } }
+  section { padding: 70px 0 30px; }
 
-  .window { background: var(--card); border: 3px solid var(--ink); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
-  .titlebar { display: flex; align-items: center; gap: 8px; padding: 7px 12px; border-bottom: 3px solid var(--ink); background: var(--blue); color: #fff; font: 500 15px var(--pixel); }
-  .titlebar.red { background: var(--red); } .titlebar.yellow { background: var(--yellow); color: var(--ink); } .titlebar.mint { background: var(--mint); color: var(--ink); } .titlebar.pink { background: var(--pink); color: var(--ink); }
-  .titlebar .dots { display: flex; gap: 5px; margin-right: 4px; }
-  .titlebar .dots i { width: 12px; height: 12px; border: 2px solid var(--ink); background: #fff; display: block; border-radius: 3px; }
-  .titlebar .dots i:first-child { background: var(--red); } .titlebar .dots i:nth-child(2) { background: var(--yellow); } .titlebar .dots i:nth-child(3) { background: var(--mint); }
-  .titlebar span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .window .body { padding: 26px; }
-
-  .hero .window { margin-bottom: 92px; }
-  .status { display: inline-flex; align-items: center; gap: 8px; font: 500 15px var(--pixel); background: var(--mint); border: 2px solid var(--ink); padding: 3px 12px; border-radius: 99px; margin-bottom: 18px; }
-  .status::before { content: ""; width: 9px; height: 9px; background: var(--ink); animation: pulse 1.2s steps(2) infinite; }
-  @keyframes pulse { 50% { opacity: .2; } }
-  h1 { font: 700 clamp(38px, 6vw, 62px)/1.02 var(--pixel); letter-spacing: -.01em; }
-  h1 .hl { background: var(--yellow); padding: 0 6px; box-shadow: 0 0 0 3px var(--ink); -webkit-box-decoration-break: clone; box-decoration-break: clone; line-height: 1.25; }
-  h1 .hl2 { color: var(--red); }
-  .lede { font-size: clamp(16px, 2vw, 18px); color: var(--muted); max-width: 600px; margin: 18px 0 24px; }
-  .btns { display: flex; flex-wrap: wrap; gap: 12px; }
-  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 10px; font: 700 16px var(--pixel);
-    border: 3px solid var(--ink); color: var(--ink); background: #fff; box-shadow: 4px 4px 0 var(--ink); text-decoration: none; transition: transform .1s, box-shadow .1s; }
-  .btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink); }
-  .btn:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--ink); }
-  .btn.blue { background: var(--blue); color: #fff; } .btn.red { background: var(--red); color: #fff; } .btn.yellow { background: var(--yellow); }
-
-  .hero-alfie { position: relative; justify-self: center; margin-bottom: 34px; }
-  .hero-alfie .alfie-bubble { font-size: 17px; }
-  @media (max-width: 860px) { .hero-alfie { justify-self: start; margin: -60px 0 44px 8px; } .hero .window { margin-bottom: 0; } }
-
-  /* ---------- Stats strip ---------- */
-  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin: 40px auto 0; }
-  .stat { border: 3px solid var(--ink); border-radius: var(--radius); padding: 16px 18px; box-shadow: var(--shadow); }
-  .stat:nth-child(1) { background: var(--yellow); } .stat:nth-child(2) { background: var(--pink); } .stat:nth-child(3) { background: var(--mint); }
-  .stat b { display: block; font: 700 30px var(--pixel); }
-  .stat small { font-weight: 500; font-size: 14px; }
-
-  /* ---------- Sections ---------- */
-  section { padding: 76px 0 40px; }
-  .eyebrow { font: 500 15px var(--pixel); color: var(--red); letter-spacing: .04em; }
-  h2 { font: 700 clamp(30px, 4.5vw, 42px)/1.1 var(--pixel); margin: 4px 0 30px; }
-  h2 span { box-shadow: inset 0 -.38em 0 var(--yellow); }
-
-  .about { display: grid; grid-template-columns: 1.4fr 1fr; gap: 28px; align-items: start; }
-  .about p { margin-bottom: 14px; font-size: 17px; color: var(--muted); }
-  .about p strong { color: var(--ink); }
-  .facts .body { padding: 8px 20px; }
-  .facts .row { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 2px dashed #e4dccb; font-size: 14px; }
+  /* ---------- About ---------- */
+  .about { display: grid; grid-template-columns: 1.45fr 1fr; gap: 34px; align-items: start; }
+  .about p { margin-bottom: 14px; }
+  .facts { transform: rotate(1.5deg); }
+  .facts .row { display: flex; justify-content: space-between; gap: 12px; padding: 4px 0; border-bottom: 2px dotted rgba(38,33,35,.25); font-size: 20px; }
   .facts .row:last-child { border: 0; }
-  .facts .row span:first-child { font: 500 15px var(--pixel); color: var(--muted); }
-  .facts .row span:last-child { text-align: right; font-weight: 600; }
-  @media (max-width: 860px) { .about { grid-template-columns: 1fr; } }
+  .facts .row span:first-child { color: var(--pencil); }
+  .facts .row span:last-child { text-align: right; }
+  @media (max-width: 880px) { .about { grid-template-columns: 1fr; } }
 
   /* ---------- Projects ---------- */
-  .project { margin-bottom: 28px; }
-  .project .inner { display: grid; grid-template-columns: 1fr 1.15fr; gap: 28px; padding: 24px; }
-  @media (max-width: 860px) { .project .inner { grid-template-columns: 1fr; padding: 18px; } }
-  .media { border: 3px solid var(--ink); border-radius: 10px; background: #f3fbff; min-height: 220px; overflow: hidden; display: flex; flex-direction: column; }
-  .media img, .media video { width: 100%; height: 100%; object-fit: cover; }
-  .roadmap { padding: 16px 18px; font-size: 14px; }
-  .roadmap h4 { font: 500 16px var(--pixel); margin-bottom: 10px; display: flex; justify-content: space-between; }
-  .roadmap ol { list-style: none; display: grid; gap: 8px; }
-  .roadmap li { display: flex; gap: 10px; align-items: flex-start; }
-  .roadmap li::before { content: ""; flex: none; width: 16px; height: 16px; margin-top: 2px; border: 3px solid var(--ink); background: #fff; }
-  .roadmap li.done::before { background: var(--mint); }
-  .roadmap li.done { color: var(--muted); text-decoration: line-through; }
-  .bar { display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px; margin-top: 14px; padding: 3px; border: 3px solid var(--ink); background: #fff; }
-  .bar i { height: 12px; background: #eee6d6; }
-  .bar i.on { background: var(--red); }
-
-  .badge { display: inline-block; font: 500 14px var(--pixel); padding: 2px 10px; border: 2px solid var(--ink); border-radius: 99px; margin-bottom: 8px; }
-  .badge.in-progress { background: var(--yellow); } .badge.planned { background: #fff; } .badge.complete { background: var(--mint); }
-  .project h3 { font: 700 26px/1.15 var(--pixel); margin-bottom: 6px; }
-  .tagline { color: var(--muted); margin-bottom: 14px; }
-  .project dl { display: grid; gap: 8px; margin-bottom: 16px; font-size: 15px; }
-  .project dt { font: 500 15px var(--pixel); color: var(--red); }
-  .project dd { margin: 0; }
-  .metrics { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
-  .metric { font: 500 14px var(--pixel); padding: 3px 10px; background: var(--blue); color: #fff; border: 2px solid var(--ink); border-radius: 8px; }
-  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
-  .tag { font: 500 12px "JetBrains Mono", monospace; padding: 3px 9px; border: 2px solid var(--ink); border-radius: 6px; background: #fff; }
-  .links { display: flex; flex-wrap: wrap; gap: 16px; font-weight: 700; font-size: 15px; }
-
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-  .card .body { padding: 18px; display: flex; flex-direction: column; height: 100%; }
-  .card h4 { font: 700 20px var(--pixel); margin-bottom: 6px; }
-  .card p { color: var(--muted); font-size: 15px; flex: 1; margin-bottom: 12px; }
+  .project { margin-bottom: 44px; }
+  .project:nth-child(even) { transform: rotate(.6deg); } .project:nth-child(odd) { transform: rotate(-.5deg); }
+  .project .inner { display: grid; grid-template-columns: 1fr 1.2fr; gap: 28px; }
+  @media (max-width: 880px) { .project .inner { grid-template-columns: 1fr; } }
+  .media { border: 2.5px solid var(--ink); border-radius: var(--wobbly-2); padding: 14px 16px; min-height: 200px; background: #fff; }
+  .media img, .media video { width: 100%; display: block; border-radius: 4px; }
+  .media h4 { font: 700 26px var(--hand); display: flex; justify-content: space-between; margin-bottom: 6px; }
+  .media .checklist { font-size: 18px; }
+  .bar { margin-top: 14px; height: 22px; border: 2.5px solid var(--ink); border-radius: var(--wobbly); overflow: hidden; background: #fff; }
+  .bar i { display: block; height: 100%; background: repeating-linear-gradient(-45deg, var(--pen-red) 0 3px, transparent 3px 8px); border-right: 2.5px solid var(--ink); }
+  .bar i[style="width:0%"] { border: 0; }
+  .badge { display: inline-block; font: 700 21px var(--note); padding: 0 10px; border: 2px solid var(--ink); border-radius: var(--wobbly); margin-bottom: 8px; transform: rotate(-2deg); }
+  .badge.in-progress { background: var(--hl-yellow); } .badge.planned { background: var(--hl-blue); } .badge.complete { background: var(--hl-green); }
+  .project h3 { font: 700 38px/1.05 var(--hand); margin-bottom: 6px; }
+  .tagline { color: var(--pencil); margin-bottom: 12px; }
+  .project dl { display: grid; gap: 6px; margin-bottom: 14px; }
+  .project dt { font: 700 24px var(--hand); color: var(--pen-red); }
+  .project dd { margin: 0 0 4px; }
+  .metrics, .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+  .metric { font: 700 20px var(--note); background: var(--hl-green); padding: 0 8px; }
+  .tag { font: 18px var(--type); padding: 1px 10px; border: 2px solid var(--ink); border-radius: var(--wobbly-2); }
+  .links { display: flex; flex-wrap: wrap; gap: 18px; font: 700 23px var(--hand); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 26px; }
+  .card h4 { font: 700 30px var(--hand); margin-bottom: 4px; }
+  .card p { color: var(--pencil); margin-bottom: 10px; }
 
   /* ---------- Skills ---------- */
-  .skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
-  .chip { font: 500 15px var(--pixel); padding: 4px 12px; border: 2px solid var(--ink); border-radius: 8px; background: #fff; }
-  .chip.strong { background: var(--blue); color: #fff; box-shadow: 3px 3px 0 var(--ink); }
-  .legend { color: var(--muted); font-size: 14px; margin-top: 18px; display: flex; align-items: center; gap: 8px; }
+  .skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
+  .skills .sticky:nth-child(1) { transform: rotate(-1.5deg); } .skills .sticky:nth-child(2) { transform: rotate(1deg); } .skills .sticky:nth-child(3) { transform: rotate(-.8deg); }
+  .skills h4 { font: 700 28px var(--hand); margin-bottom: 8px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px 10px; }
+  .chip { font: 400 21px var(--print); padding: 0 10px; border: 2px solid var(--ink); border-radius: var(--wobbly); background: rgba(255,255,255,.55); }
+  .chip.strong { border-color: var(--pen-red); border-width: 2.5px; font-weight: 700; color: var(--pen-red); }
+  .legend { color: var(--pencil); margin-top: 18px; font-family: var(--note); font-size: 22px; }
 
   /* ---------- Timeline ---------- */
-  .timeline { border-left: 4px dashed var(--ink); padding-left: 28px; display: grid; gap: 24px; margin-left: 8px; }
+  .timeline { border-left: 3px dashed var(--ink); padding-left: 32px; display: grid; gap: 30px; margin-left: 10px; }
   .item { position: relative; }
-  .item::before { content: ""; position: absolute; left: -42px; top: 18px; width: 20px; height: 20px; background: var(--blue); border: 3px solid var(--ink); }
-  .item.red::before { background: var(--red); }
-  .item .body { padding: 16px 20px; }
-  .item .when { font: 500 15px var(--pixel); color: var(--red); }
-  .item h4 { font: 700 21px var(--pixel); }
-  .item .org { color: var(--muted); font-size: 15px; font-weight: 500; }
-  .item ul { color: var(--muted); font-size: 15px; padding-left: 18px; margin-top: 8px; }
+  .item::before { content: ""; position: absolute; left: -45px; top: 22px; width: 20px; height: 20px; border: 3px solid var(--ink); border-radius: 50% 40% 55% 45%; background: var(--hl-blue); }
+  .item.red::before { background: var(--hl-pink); }
+  .item .sheet { padding: 20px 24px 30px; }
+  .item:nth-child(odd) .sheet { transform: rotate(-.6deg); } .item:nth-child(even) .sheet { transform: rotate(.5deg); }
+  .item .when { font: 700 22px var(--hand); color: var(--pen-red); }
+  .item h4 { font: 700 32px var(--hand); }
+  .item .org { color: var(--pencil); }
+  .item ul { padding-left: 22px; margin-top: 6px; }
 
   /* ---------- Contact ---------- */
-  .contact { background: var(--red); border-top: 3px solid var(--ink); border-bottom: 3px solid var(--ink); margin-top: 60px; padding: 64px 0;
-    background-image: radial-gradient(rgba(255,255,255,.18) 2px, transparent 2px); background-size: 22px 22px; }
-  .contact .wrap { display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: end; }
-  .contact .window { max-width: 680px; }
-  .contact p { color: var(--muted); margin-bottom: 20px; }
-  .contact h2 { margin-bottom: 12px; }
-  @media (max-width: 760px) { .contact .wrap { grid-template-columns: 1fr; } }
+  .contact .wrap { display: grid; grid-template-columns: auto 1fr; gap: 20px; align-items: end; }
+  .contact .sheet { max-width: 700px; transform: rotate(-.8deg); }
+  .contact .alfie-spot { padding-right: 110px; }
+  @media (max-width: 780px) { .contact .wrap { grid-template-columns: 1fr; } }
 
-  footer { padding: 28px 0 36px; text-align: center; font-size: 14px; }
-  footer .sys { font: 13px "JetBrains Mono", monospace; margin-top: 8px; color: var(--muted); }
-  footer .sys b { color: var(--red); }
-  footer button { background: none; border: 0; color: var(--blue); font: inherit; font-weight: 700; cursor: pointer; padding: 0; text-decoration: underline; text-underline-offset: 3px; }
-
-  @media (prefers-reduced-motion: reduce) { .cloud, .status::before { animation: none; } }
+  footer { padding: 40px 0 46px; text-align: center; font-family: var(--note); font-size: 21px; color: var(--pencil); }
+  footer .sys { font: 15px var(--type); margin-top: 6px; }
+  footer .sys b { color: var(--pen-red); font-weight: 400; }
+  footer button { background: none; border: 0; color: var(--pen-blue); font: inherit; cursor: pointer; text-decoration: underline wavy 2px; text-underline-offset: 4px; }
 </style>
 </head>
 <body>
@@ -202,88 +131,86 @@
 
 <nav>
   <div class="wrap">
-    <a href="#" class="logo"><img id="nav-face" alt="">AlfieOS</a>
+    <a href="#" class="logo"><img src="assets/alfie-head.png" alt="">AlfieOS</a>
     <ul>
-      <li class="hide-sm"><a href="#about">About</a></li>
-      <li class="hide-sm"><a href="#projects">Projects</a></li>
-      <li class="hide-sm"><a href="#skills">Skills</a></li>
-      <li class="hide-sm"><a href="#experience">Experience</a></li>
+      <li class="hide-sm"><a href="#about">about</a></li>
+      <li class="hide-sm"><a href="#projects">projects</a></li>
+      <li class="hide-sm"><a href="#skills">skills</a></li>
+      <li class="hide-sm"><a href="#experience">experience</a></li>
       <li><a href="terminal.html" class="term-link" title="Explore this portfolio from a shell">&gt;_ terminal</a></li>
       <li class="hide-sm"><span class="clock" id="clock"></span></li>
     </ul>
   </div>
 </nav>
 
-<header class="wallpaper">
-  <div class="sun" aria-hidden="true"></div>
-  <div class="cloud c1" aria-hidden="true"></div>
-  <div class="cloud c2" aria-hidden="true"></div>
-  <div class="cloud c3" aria-hidden="true"></div>
-  <div class="ground" aria-hidden="true"></div>
-
-  <div class="wrap hero">
-    <div class="window">
-      <div class="titlebar"><div class="dots"><i></i><i></i><i></i></div><span>welcome.txt</span></div>
-      <div class="body">
-        <div class="status">Seeking a 12-month placement · 2027–28</div>
-        <h1>Hi, I'm Alfie.<br>I build <span class="hl">software close to the <span class="hl2">metal</span></span></h1>
-        <p class="lede">
-          Second-year Computer Science student at Newcastle University. I write C, Python and Java,
-          and I'm drawn to the systems underneath everything else: networks, operating systems and
-          code that has to be fast and correct.
-        </p>
-        <div class="btns">
-          <a class="btn blue" href="#projects">View projects →</a>
-          <a class="btn yellow" href="cv.pdf" target="_blank" rel="noopener">Download CV</a>
-          <a class="btn" href="https://github.com/AlfieRadcliffe" target="_blank" rel="noopener">GitHub</a>
-          <a class="btn" href="https://www.linkedin.com/in/alfie-radcliffe-09584b27b/" target="_blank" rel="noopener">LinkedIn</a>
-        </div>
+<header class="hero">
+  <div class="wrap">
+    <div class="sheet taped">
+      <div class="status">✎ open to a 2027–28 placement</div>
+      <h1>Hi, I'm <span class="name">Alfie.</span><br>I build <span class="hl">software close to the metal</span></h1>
+      <p class="lede">
+        Second-year Computer Science student at Newcastle University. I write C, Python and Java,
+        and I'm drawn to the systems underneath everything else: networks, operating systems and
+        code that has to be fast and correct.
+      </p>
+      <div class="btns">
+        <a class="btn blue" href="#projects">see my projects →</a>
+        <a class="btn yellow" href="cv.pdf" target="_blank" rel="noopener">download CV</a>
+        <a class="btn" href="https://github.com/AlfieRadcliffe" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn" href="https://www.linkedin.com/in/alfie-radcliffe-09584b27b/" target="_blank" rel="noopener">LinkedIn</a>
       </div>
     </div>
-    <div class="hero-alfie" id="hero-alfie" data-alfie data-alfie-scale="10" data-alfie-wave data-alfie-say="Hi! I'm Alfie 👋"></div>
+
+    <div class="stage">
+      <svg class="doodle" style="top:0;right:0" width="110" height="110" viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="24"/><path d="M60 12 L60 28 M60 92 L60 108 M12 60 L28 60 M92 60 L108 60 M26 26 L37 37 M83 83 L94 94 M94 26 L83 37 M26 94 L37 83"/></svg>
+      <svg class="doodle" style="top:4px;left:2%" width="100" height="60" viewBox="0 0 115 70" aria-hidden="true"><path d="M20 60 Q6 60 10 47 Q13 36 26 38 Q30 22 48 24 Q60 10 74 24 Q92 20 94 36 Q108 40 104 52 Q100 62 88 60 Z"/></svg>
+      <svg class="doodle" style="top:30px;left:42%" width="34" height="34" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 2 L25 15 L38 15 L28 24 L32 38 L20 30 L8 38 L12 24 L2 15 L15 15 Z"/></svg>
+      <div class="thats-me">that's me!
+        <svg class="doodle" style="position:absolute;left:30px;top:30px" width="90" height="64" viewBox="0 0 100 70" aria-hidden="true"><path d="M8 6 Q30 60 88 52 M74 42 L90 52 L76 64" style="stroke:var(--pen-red)"/></svg>
+      </div>
+      <div class="me" id="hero-alfie" data-alfie data-alfie-scale="15" data-alfie-wave data-alfie-say="hiya! 👋"></div>
+      <svg class="doodle ground" viewBox="0 0 400 30" preserveAspectRatio="none" aria-hidden="true"><path d="M4 18 Q60 10 120 17 T240 15 T396 16 M40 24 L52 20 M300 24 L314 19"/></svg>
+    </div>
   </div>
 </header>
 
 <div class="wrap">
   <div class="stats">
-    <div class="stat"><b>80%+</b><small>First-year average (First Class)</small></div>
-    <div class="stat"><b>C · Py · Java</b><small>Strongest languages</small></div>
-    <div class="stat"><b>2027–28</b><small>Available for a year in industry</small></div>
+    <div class="sticky"><b>80%+</b><small>first-year average (First Class)</small></div>
+    <div class="sticky pink"><b>C · Py · Java</b><small>my strongest languages</small></div>
+    <div class="sticky green"><b>2027–28</b><small>free for a year in industry</small></div>
   </div>
 </div>
 
 <section id="about">
   <div class="wrap">
-    <div class="eyebrow">~/about.txt</div>
-    <h2><span>A bit about me</span></h2>
+    <span class="eyebrow">~/about.txt</span>
+    <h2><span class="squiggle">A bit about me</span></h2>
     <div class="about">
-      <div>
+      <div class="sheet lined taped">
         <p>
-          I'm a Computer Science student at <strong>Newcastle University</strong>, now in second year after
-          finishing first year with an <strong>average above 80%</strong>. What keeps me interested is understanding
+          I'm a Computer Science student at <span class="hl">Newcastle University</span>, now in second year after
+          finishing first year with an <span class="hl green">average above 80%</span>. What keeps me interested is understanding
           how things actually work: not just using a library, but knowing what it's doing to the network, the
           memory and the CPU.
         </p>
         <p>
-          That's why my projects lean towards <strong>systems programming</strong>. I'm building a real-time
+          That's why my projects lean towards <span class="hl pink">systems programming</span>. I'm building a real-time
           multiplayer game server in C to put my Networks module into practice, and next I'm writing a
           small operating system from scratch. Modules in Security Programming and Algorithms have pushed me
           to care about code that is safe and efficient, not just code that runs.
         </p>
         <p>
-          I'm looking for a <strong>12-month industrial placement for 2027–28</strong> in any software
+          I'm looking for a <span class="hl blue">12-month industrial placement for 2027–28</span> in any software
           engineering team where I can learn from experienced engineers and ship things that matter.
         </p>
       </div>
-      <div class="window facts">
-        <div class="titlebar mint"><div class="dots"><i></i><i></i><i></i></div><span>system_info</span></div>
-        <div class="body">
-          <div class="row"><span>University</span><span>Newcastle University</span></div>
-          <div class="row"><span>Degree</span><span>BSc Computer Science</span></div>
-          <div class="row"><span>Graduating</span><span>2029 (incl. placement year)</span></div>
-          <div class="row"><span>Looking for</span><span>12-month placement, 2027–28</span></div>
-          <div class="row"><span>Location</span><span>Newcastle · open to relocation &amp; remote</span></div>
-        </div>
+      <div class="sticky blue facts">
+        <div class="row"><span>uni</span><span>Newcastle University</span></div>
+        <div class="row"><span>degree</span><span>BSc Computer Science</span></div>
+        <div class="row"><span>graduating</span><span>2029 (incl. placement)</span></div>
+        <div class="row"><span>looking for</span><span>12-month placement, 2027–28</span></div>
+        <div class="row"><span>based in</span><span>Newcastle · will relocate · remote ok</span></div>
       </div>
     </div>
   </div>
@@ -291,12 +218,12 @@
 
 <section id="projects">
   <div class="wrap">
-    <div class="eyebrow">~/projects/</div>
-    <h2><span>Projects</span></h2>
+    <span class="eyebrow">~/projects/</span>
+    <h2><span class="squiggle">Projects</span></h2>
     <!-- Projects are generated from projects.js — edit that file, not this one. -->
     <div id="featured"></div>
     <div id="others-wrap" hidden>
-      <h2 style="margin-top:48px;font-size:28px"><span>Other projects</span></h2>
+      <h2 style="margin-top:40px;font-size:42px"><span class="squiggle">Other projects</span></h2>
       <div class="grid" id="others"></div>
     </div>
   </div>
@@ -304,41 +231,41 @@
 
 <section id="skills">
   <div class="wrap">
-    <div class="eyebrow">~/skills.txt</div>
-    <h2><span>Skills</span></h2>
+    <span class="eyebrow">~/skills.txt</span>
+    <h2><span class="squiggle">Skills</span></h2>
     <div class="skills">
-      <div class="window">
-        <div class="titlebar"><div class="dots"><i></i><i></i><i></i></div><span>languages</span></div>
-        <div class="body chips">
+      <div class="sticky">
+        <h4>languages</h4>
+        <div class="chips">
           <span class="chip strong">C</span><span class="chip strong">Python</span><span class="chip strong">Java</span>
           <span class="chip strong">HTML</span><span class="chip strong">CSS</span><span class="chip">SQL</span>
         </div>
       </div>
-      <div class="window">
-        <div class="titlebar red"><div class="dots"><i></i><i></i><i></i></div><span>computer_science</span></div>
-        <div class="body chips">
-          <span class="chip">Algorithms &amp; data structures</span><span class="chip">Networking (TCP/UDP)</span>
-          <span class="chip">Security programming</span>
+      <div class="sticky pink">
+        <h4>computer science</h4>
+        <div class="chips">
+          <span class="chip">algorithms &amp; data structures</span><span class="chip">networking (TCP/UDP)</span>
+          <span class="chip">security programming</span>
         </div>
       </div>
-      <div class="window">
-        <div class="titlebar yellow"><div class="dots"><i></i><i></i><i></i></div><span>tools</span></div>
-        <div class="body chips">
+      <div class="sticky green">
+        <h4>tools</h4>
+        <div class="chips">
           <span class="chip">Git &amp; GitHub</span><span class="chip">Linux</span><span class="chip">VS Code</span>
         </div>
       </div>
     </div>
-    <p class="legend"><span class="chip strong">Blue</span> = strongest</p>
+    <p class="legend">circled in <span class="pen-red">red</span> = my strongest</p>
   </div>
 </section>
 
 <section id="experience">
   <div class="wrap">
-    <div class="eyebrow">~/experience.txt</div>
-    <h2><span>Experience &amp; education</span></h2>
+    <span class="eyebrow">~/experience.txt</span>
+    <h2><span class="squiggle">Experience &amp; education</span></h2>
     <div class="timeline">
       <div class="item">
-        <div class="window"><div class="body">
+        <div class="sheet">
           <div class="when">2025 — 2029</div>
           <h4>BSc Computer Science</h4>
           <div class="org">Newcastle University</div>
@@ -347,12 +274,12 @@
             <li>Relevant modules: Security Programming, Algorithms, Networks</li>
             <li>Includes a 12-month industrial placement year (2027–28)</li>
           </ul>
-        </div></div>
+        </div>
       </div>
       <div class="item red">
-        <div class="window"><div class="body">
+        <div class="sheet">
           <!-- TODO: add the month/year of the placement below, e.g. "July 2024" -->
-          <div class="when">Work experience · 1 week</div>
+          <div class="when">work experience · 1 week</div>
           <h4>TUBR</h4>
           <div class="org">AI &amp; predictive analytics startup · Sheffield</div>
           <ul>
@@ -360,7 +287,7 @@
             <!-- TODO: add 1–3 bullets about what you did, e.g.
             <li>Shadowed the engineering team as they trained and evaluated forecasting models</li> -->
           </ul>
-        </div></div>
+        </div>
       </div>
       <!-- TODO: add A-levels / school here if you want them on the site (copy an .item block above) -->
     </div>
@@ -369,45 +296,41 @@
 
 <section id="contact" class="contact">
   <div class="wrap">
-    <div data-alfie data-alfie-scale="8" data-alfie-say="Say hi!" id="contact-alfie" style="padding-right:110px"></div>
-    <div class="window">
-      <div class="titlebar yellow"><div class="dots"><i></i><i></i><i></i></div><span>new_message.eml</span></div>
-      <div class="body">
-        <h2><span>Let's talk</span></h2>
-        <p>I'm looking for a 12-month software engineering placement for 2027–28. The quickest way to reach me is email.</p>
-        <div class="btns">
-          <a class="btn red" href="mailto:alfieradcliffe1234@gmail.com">alfieradcliffe1234@gmail.com</a>
-          <a class="btn" href="https://www.linkedin.com/in/alfie-radcliffe-09584b27b/" target="_blank" rel="noopener">LinkedIn</a>
-          <a class="btn" href="https://github.com/AlfieRadcliffe" target="_blank" rel="noopener">GitHub</a>
-        </div>
+    <div class="alfie-spot" data-alfie data-alfie-scale="10" data-alfie-say="say hi!" id="contact-alfie"></div>
+    <div class="sheet lined taped">
+      <h2 style="margin-bottom:8px"><span class="squiggle">Let's talk</span></h2>
+      <p style="margin-bottom:18px">I'm looking for a 12-month software engineering placement for 2027–28. The quickest way to reach me is email.</p>
+      <div class="btns">
+        <a class="btn pink" href="mailto:alfieradcliffe1234@gmail.com">alfieradcliffe1234@gmail.com</a>
+        <a class="btn" href="https://www.linkedin.com/in/alfie-radcliffe-09584b27b/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn" href="https://github.com/AlfieRadcliffe" target="_blank" rel="noopener">GitHub</a>
       </div>
     </div>
   </div>
 </section>
 
 <footer>
-  <div class="wrap">© <span id="year">2026</span> Alfie Radcliffe · Hand-built with HTML, CSS &amp; JavaScript · <a href="https://github.com/AlfieRadcliffe/AlfieRadcliffe.github.io" target="_blank" rel="noopener">Source</a> · <button type="button" onclick="alfieReboot()">Reboot</button></div>
+  <div class="wrap">© <span id="year">2026</span> Alfie Radcliffe · drawn &amp; coded by hand · <a href="https://github.com/AlfieRadcliffe/AlfieRadcliffe.github.io" target="_blank" rel="noopener">source</a> · <button type="button" onclick="alfieReboot()">reboot</button></div>
   <div class="wrap sys" id="sys" hidden></div>
 </footer>
 
 <script>
   // ---------- Small OS touches ----------
   document.getElementById("year").textContent = new Date().getFullYear();
-  document.getElementById("nav-face").src = AlfieSprite.faceURL(3);
   const clock = document.getElementById("clock");
   const tickClock = () => (clock.textContent = new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }));
   tickClock(); setInterval(tickClock, 10000);
 
-  // Hero Alfie reacts when you hover the buttons
+  // Alfie reacts when you hover the buttons
   document.addEventListener("DOMContentLoaded", () => {
     const hero = document.getElementById("hero-alfie").alfie;
-    const lines = { "View projects →": "Ooh, my projects!", "Download CV": "Fresh off the printer 📄", GitHub: "All my code lives there", LinkedIn: "Let's connect!" };
+    const lines = { "see my projects →": "ooh, my projects!", "download CV": "fresh off the printer", GitHub: "all my code lives there", LinkedIn: "let's connect!" };
     document.querySelectorAll(".hero .btn").forEach((b) => {
       b.addEventListener("mouseenter", () => { hero.say(lines[b.textContent.trim()] || "👀"); hero.happy(900); });
-      b.addEventListener("mouseleave", () => hero.say("Hi! I'm Alfie 👋"));
+      b.addEventListener("mouseleave", () => hero.say("hiya! 👋"));
     });
     const contact = document.getElementById("contact-alfie").alfie;
-    document.querySelectorAll(".contact .btn").forEach((b) => b.addEventListener("mouseenter", () => { contact.wave(1500); contact.say("Yes! That one!", 1500); }));
+    document.querySelectorAll(".contact .btn").forEach((b) => b.addEventListener("mouseenter", () => { contact.wave(1500); contact.say("yes! that one!", 1500); }));
   });
 
   // ---------- Live page stats (real numbers from the browser's Performance API) ----------
@@ -423,13 +346,12 @@
   }, 0));
 
   // ---------- Console easter egg ----------
-  console.log("%c>_ AlfieOS", "font: 700 20px monospace; color: #ff4d5e");
+  console.log("%c>_ AlfieOS", "font: 700 20px monospace; color: #d63b3b");
   console.log("%cOh hey, you opened the console. We'd probably get on.\nPrefer a shell? → /terminal.html\nSource: https://github.com/AlfieRadcliffe/AlfieRadcliffe.github.io\nSay hi: alfieradcliffe1234@gmail.com",
-    "font: 13px monospace; color: #4f4866");
+    "font: 13px monospace; color: #5d5960");
 
   // ---------- Render projects from projects.js ----------
-  const STATUS = { "in-progress": "In progress", planned: "Planned", complete: "Complete" };
-  const BAR_COLOURS = ["", "red", "yellow", "mint", "pink"];
+  const STATUS = { "in-progress": "in progress", planned: "planned", complete: "done!" };
 
   function el(tag, attrs = {}, ...children) {
     const n = document.createElement(tag);
@@ -445,10 +367,6 @@
   const has = (x) => x && (Array.isArray(x) ? x.length : String(x).trim());
   const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
-  function titlebar(name, i) {
-    return el("div", { class: "titlebar " + BAR_COLOURS[i % BAR_COLOURS.length] },
-      el("div", { class: "dots" }, el("i"), el("i"), el("i")), el("span", {}, name));
-  }
   function tags(p) { return has(p.tags) ? el("div", { class: "tags" }, p.tags.map(t => el("span", { class: "tag" }, t))) : null; }
   function links(p) {
     return has(p.links) ? el("div", { class: "links" },
@@ -465,24 +383,22 @@
         : el("img", { src: p.media, alt: p.title + " screenshot", loading: "lazy" }));
     } else if (has(p.milestones)) {
       const done = p.milestones.filter(m => m.done).length;
-      const lit = Math.round((done / p.milestones.length) * 10);
-      const bar = el("div", { class: "bar", title: done + " of " + p.milestones.length + " milestones done" },
-        Array.from({ length: 10 }, (_, i) => el("i", { class: i < lit ? "on" : "" })));
-      box.append(el("div", { class: "roadmap" },
-        el("h4", {}, el("span", {}, "Roadmap"), el("span", {}, done + "/" + p.milestones.length)),
-        el("ol", {}, p.milestones.map(m => el("li", { class: m.done ? "done" : "" }, m.text))),
-        bar));
+      const pct = Math.round((done / p.milestones.length) * 100);
+      box.append(
+        el("h4", {}, el("span", {}, "to-do list"), el("span", { class: "pen-red" }, done + "/" + p.milestones.length)),
+        el("ul", { class: "checklist" }, p.milestones.map(m => el("li", { class: m.done ? "done" : "" }, m.text))),
+        el("div", { class: "bar", title: done + " of " + p.milestones.length + " done" }, el("i", { style: "width:" + pct + "%" })));
     }
     return box;
   }
 
-  function featured(p, i) {
+  function featured(p) {
     const dl = el("dl");
-    [["Why", p.problem], ["What I'm building", p.built], ["Hardest part", p.hardest]].forEach(([k, v]) => {
+    [["why?", p.problem], ["what I'm building", p.built], ["hardest part", p.hardest]].forEach(([k, v]) => {
       if (has(v)) dl.append(el("dt", {}, k), el("dd", {}, v));
     });
-    return el("article", { class: "window project" },
-      titlebar(slug(p.title) + ".md", i),
+    return el("article", { class: "sheet taped project" },
+      el("span", { class: "filename" }, slug(p.title) + ".md"),
       el("div", { class: "inner" },
         media(p),
         el("div", {},
@@ -493,19 +409,19 @@
           dl, tags(p), links(p))));
   }
 
-  function card(p, i) {
-    return el("div", { class: "window card" }, titlebar(slug(p.title) + ".md", i + 2),
-      el("div", { class: "body" }, badge(p), el("h4", {}, p.title), el("p", {}, p.tagline), tags(p), links(p)));
+  function card(p) {
+    return el("div", { class: "sheet taped card" }, el("span", { class: "filename" }, slug(p.title) + ".md"),
+      badge(p), el("h4", {}, p.title), el("p", {}, p.tagline), tags(p), links(p));
   }
 
   const list = window.PROJECTS || [];
   const fWrap = document.getElementById("featured");
-  list.filter(p => p.featured).forEach((p, i) => fWrap.append(featured(p, i)));
+  list.filter(p => p.featured).forEach(p => fWrap.append(featured(p)));
   const rest = list.filter(p => !p.featured);
   if (rest.length) {
     document.getElementById("others-wrap").hidden = false;
     const o = document.getElementById("others");
-    rest.forEach((p, i) => o.append(card(p, i)));
+    rest.forEach(p => o.append(card(p)));
   }
 </script>
 </body>

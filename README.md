@@ -10,7 +10,8 @@ Live at **https://alfieradcliffe.github.io**
 |---|---|
 | `index.html` | The website (layout, styles, about, skills, experience) |
 | `projects.js` | **The project list. Edit this to add or update projects.** |
-| `sprite.js` | Pixel Alfie, the animated mascot (drawn on canvas; edit `BASE` to change the art) |
+| `sprite.js` | Animates Alfie's own drawing (`assets/alfie.png`): wobbly "line boil", choppy poses, waving arm |
+| `theme.css` | The notebook look: lined paper, tape, sticky notes, highlighter, handwriting fonts |
 | `boot.js` | AlfieOS boot screen and mode menu (plays once per visitor; `?boot` replays it) |
 | `terminal.html` / `terminal.js` | Terminal mode: a shell with `ls`, `cat`, `man alfie`, `neofetch`, `ping`… |
 | `404.html` | "Segmentation fault" page for broken links |

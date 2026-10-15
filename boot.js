@@ -1,6 +1,6 @@
 /* ============================================================
    AlfieOS boot screen
-   Plays once per visitor (remembered in localStorage): pixel Alfie,
+   Plays once per visitor (remembered in localStorage): hand-drawn Alfie,
    a loading bar and boot messages, then a menu to choose
    Recruiter mode (the normal site) or Terminal mode.
    Any key / click skips the boot. Add ?boot to the URL, or click
@@ -20,43 +20,36 @@
   if (seen && !forced) return;
 
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const ink = "#1b1430";
-
+  // Styled with the notebook theme (theme.css): lined paper, pen, sticky notes
   const css = `
-  #boot { position: fixed; inset: 0; z-index: 1000; overflow: auto; color: ${ink};
-    font: 500 16px/1.4 "Pixelify Sans", "JetBrains Mono", monospace;
-    background: linear-gradient(180deg, #6cc8ff 0%, #c9eeff 80%);
-    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; padding: 24px 16px 90px;
-    transition: opacity .35s, transform .35s; }
-  #boot.fade { opacity: 0; transform: scale(1.04); pointer-events: none; }
-  #boot::after { content: ""; position: fixed; left: 0; right: 0; bottom: 0; height: 56px; background: #3ddc97;
-    border-top: 3px solid ${ink}; background-image: repeating-linear-gradient(90deg, #3ddc97 0 24px, #22b574 24px 32px, #3ddc97 32px 56px);
-    background-size: 56px 12px; background-repeat: repeat-x; }
-  #boot .logo { font: 700 clamp(40px, 8vw, 64px)/1 "Pixelify Sans", monospace; letter-spacing: .02em;
-    color: #fff; -webkit-text-stroke: 3px ${ink}; paint-order: stroke fill; text-shadow: 5px 5px 0 ${ink}; }
-  #boot .logo span { color: #ffd23f; }
-  #boot .ver { margin-top: -10px; font-size: 15px; }
-  #boot .barwrap { width: min(420px, 90vw); }
-  #boot .bar { display: grid; grid-template-columns: repeat(20, 1fr); gap: 3px; padding: 4px; border: 3px solid ${ink};
-    background: #fff; box-shadow: 4px 4px 0 ${ink}; border-radius: 6px; }
-  #boot .bar i { height: 16px; background: #eee6d6; transition: background .1s; }
-  #boot .bar i.on { background: #ff4d5e; }
-  #boot .bar i.on:nth-child(3n) { background: #ffd23f; } #boot .bar i.on:nth-child(3n+1) { background: #2f6bff; }
-  #boot .msg { margin-top: 10px; min-height: 1.4em; font: 13px/1.4 "JetBrains Mono", monospace; text-align: center; }
-  #boot .msg b { color: #2f6bff; }
-  #boot .skip { position: fixed; bottom: 70px; right: 16px; font-size: 13px; z-index: 1; }
-  #boot .menu { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; width: min(560px, 92vw); }
-  @media (max-width: 520px) { #boot .menu { grid-template-columns: 1fr; } }
-  #boot .opt { text-align: left; cursor: pointer; font: inherit; color: ${ink}; background: #fff; border: 3px solid ${ink};
-    border-radius: 12px; box-shadow: 5px 5px 0 ${ink}; padding: 0; overflow: hidden; transition: transform .1s, box-shadow .1s; }
-  #boot .opt .tb { padding: 5px 10px; border-bottom: 3px solid ${ink}; font-size: 14px; background: #2f6bff; color: #fff; }
-  #boot .opt:nth-child(2) .tb { background: #ff4d5e; }
-  #boot .opt .bd { padding: 12px; }
-  #boot .opt b { display: block; font-size: 22px; }
-  #boot .opt small { font: 13px/1.35 Inter, sans-serif; }
-  #boot .opt.sel, #boot .opt:hover { transform: translate(-3px, -3px); box-shadow: 8px 8px 0 ${ink}; background: #ffd23f; }
-  #boot .hint { font-size: 14px; text-align: center; }
-  #boot .hint b { color: #ff4d5e; }
+  #boot { position: fixed; inset: 0; z-index: 1000; overflow: auto; color: var(--ink);
+    font: 20px/1.4 var(--print);
+    background-color: var(--paper);
+    background-image: linear-gradient(90deg, transparent 70px, var(--margin) 70px, var(--margin) 72px, transparent 72px),
+      repeating-linear-gradient(180deg, transparent 0 33px, var(--rule) 33px 34px);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 24px 16px 40px;
+    transition: opacity .3s steps(3); }
+  #boot.fade { opacity: 0; pointer-events: none; }
+  #boot .logo { font: 400 clamp(42px, 8vw, 66px)/1.2 var(--scrawl); transform: rotate(-3deg); }
+  #boot .logo span { color: var(--pen-red); }
+  #boot .ver { font: 22px var(--note); color: var(--pencil); margin-top: -6px; }
+  #boot .barwrap { width: min(440px, 88vw); margin-top: 6px; }
+  #boot .bar { height: 30px; border: 3px solid var(--ink); border-radius: var(--wobbly); background: #fff; overflow: hidden; filter: url(#alfie-boil); }
+  #boot .bar i { display: block; height: 100%; width: 0; border-right: 3px solid var(--ink);
+    background: repeating-linear-gradient(-45deg, var(--pen-red) 0 3px, transparent 3px 9px); }
+  #boot .msg { margin-top: 10px; min-height: 1.4em; font: 17px/1.4 var(--type); text-align: center; color: var(--pencil); }
+  #boot .msg b { color: var(--pen-blue); font-weight: 400; }
+  #boot .skip { position: fixed; bottom: 16px; right: 20px; font: 21px var(--note); color: var(--pencil); }
+  #boot .menu { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; width: min(580px, 90vw); margin-top: 10px; }
+  @media (max-width: 520px) { #boot .menu { grid-template-columns: 1fr; gap: 22px; } }
+  #boot .opt { text-align: left; cursor: pointer; color: var(--ink); border: 0; font: inherit; transform: rotate(-2deg); transition: transform .1s steps(2); }
+  #boot .opt:nth-child(2) { transform: rotate(2deg); }
+  #boot .opt b { display: block; font: 700 32px/1.1 var(--hand); }
+  #boot .opt small { font: 21px/1.3 var(--note); }
+  #boot .opt .file { font: 17px var(--type); color: var(--pencil); }
+  #boot .opt.sel, #boot .opt:hover { transform: rotate(0) scale(1.05); outline: 3px solid var(--ink); outline-offset: 4px; border-radius: 4px; }
+  #boot .hint { font: 22px var(--note); text-align: center; margin-top: 18px; }
+  #boot .hint b { color: var(--pen-red); }
   `;
   const style = document.createElement("style");
   style.textContent = css;
@@ -69,22 +62,22 @@
   box.innerHTML =
     '<div class="who"></div>' +
     '<div class="logo">Alfie<span>OS</span></div><div class="ver">version 2.0 · ' + new Date().getFullYear() + '</div>' +
-    '<div class="stage"><div class="barwrap"><div class="bar">' + "<i></i>".repeat(20) + '</div><div class="msg"></div></div></div>' +
+    '<div class="boot-stage"><div class="barwrap"><div class="bar"><i></i></div><div class="msg"></div></div></div>' +
     '<div class="skip">press any key to skip ›</div>';
   document.body.appendChild(box);
   document.documentElement.style.overflow = "hidden";
 
-  // Pixel Alfie (sprite.js)
+  // Hand-drawn Alfie (sprite.js)
   let alfie = null;
   if (window.AlfieSprite) {
     if (!document.getElementById("alfie-sprite-css")) {
       const st = document.createElement("style"); st.id = "alfie-sprite-css"; st.textContent = AlfieSprite.CSS; document.head.appendChild(st);
     }
-    alfie = AlfieSprite.mount(box.querySelector(".who"), { scale: 7, label: "Pixel Alfie" });
-    alfie.say("Booting up…");
+    alfie = AlfieSprite.mount(box.querySelector(".who"), { scale: 11, label: "Alfie's doodle of himself" });
+    alfie.say("booting up…");
   }
 
-  const bars = box.querySelectorAll(".bar i");
+  const fill = box.querySelector(".bar i");
   const msg = box.querySelector(".msg");
   const projects = (window.PROJECTS || []).length || 2;
   const STEPS = [
@@ -107,19 +100,19 @@
     done = true;
     timers.forEach(clearTimeout);
     box.querySelector(".skip").remove();
-    if (alfie) { alfie.say("Pick one!"); alfie.wave(); }
+    if (alfie) { alfie.say("pick one!"); alfie.wave(); }
     const items = [
-      { title: "recruiter.app", label: "Recruiter mode", hint: "The clean, quick-to-read portfolio.", go: () => close() },
-      { title: "terminal.app", label: "Terminal mode", hint: "Explore with a shell: ls, cat, man alfie.", go: () => { remember(); location.href = "terminal.html"; } },
+      { title: "recruiter.app", label: "Recruiter mode", hint: "the clean, quick-to-read portfolio", go: () => close() },
+      { title: "terminal.app", label: "Terminal mode", hint: "explore with a shell: ls, cat, man alfie", go: () => { remember(); location.href = "terminal.html"; } },
     ];
     let sel = 0, left = 8;
-    const stage = box.querySelector(".stage");
-    stage.innerHTML = '<div class="menu"></div><p class="hint" style="margin-top:16px">Use ← → and Enter, or click. Recruiter mode starts in <b class="t">' + left + '</b>s.</p>';
+    const stage = box.querySelector(".boot-stage");
+    stage.innerHTML = '<div class="menu"></div><p class="hint">use ← → and Enter, or click. recruiter mode starts in <b class="t">' + left + '</b>s</p>';
     const menu = stage.querySelector(".menu"), t = stage.querySelector(".t");
     const btns = items.map((it, i) => {
       const b = document.createElement("button");
-      b.className = "opt";
-      b.innerHTML = `<div class="tb">${it.title}</div><div class="bd"><b>${it.label}</b><small>${it.hint}</small></div>`;
+      b.className = "opt sticky" + (i ? " pink" : "");
+      b.innerHTML = `<span class="file">${it.title}</span><b>${it.label}</b><small>${it.hint}</small>`;
       b.addEventListener("click", it.go);
       b.addEventListener("mouseenter", () => { sel = i; draw(); });
       menu.appendChild(b);
@@ -127,7 +120,7 @@
     });
     function draw() {
       btns.forEach((b, i) => b.classList.toggle("sel", i === sel));
-      if (alfie) alfie.say(sel ? "Ooh, hacker mode!" : "Nice and simple!");
+      if (alfie) alfie.say(sel ? "ooh, hacker mode!" : "nice and simple!");
     }
     draw();
     btns[0].focus({ preventScroll: true });
@@ -137,7 +130,7 @@
     }, 1000);
     menuKeys = (e) => {
       clearInterval(tick);
-      if (t.parentNode) t.parentNode.textContent = "Use ← → and Enter, or click.";
+      if (t.parentNode) t.parentNode.textContent = "use ← → and Enter, or click";
       if (["ArrowDown", "ArrowUp", "ArrowLeft", "ArrowRight", "Tab"].includes(e.key)) { sel = 1 - sel; draw(); btns[sel].focus({ preventScroll: true }); e.preventDefault(); }
       else if (e.key === "Enter" || e.key === " ") { e.preventDefault(); items[sel].go(); }
       else if (e.key === "Escape") items[0].go();
@@ -163,8 +156,7 @@
   const per = 2200 / STEPS.length;
   STEPS.forEach((s, i) => at(per * i, () => {
     msg.innerHTML = s;
-    const lit = Math.round(((i + 1) / STEPS.length) * bars.length);
-    bars.forEach((b, j) => b.classList.toggle("on", j < lit));
+    fill.style.width = Math.round(((i + 1) / STEPS.length) * 100) + "%"; // jumps in steps, like it's being coloured in
     if (alfie && i === 6) alfie.say("☕ mmm…");
   }));
   at(2200 + 350, showMenu);
