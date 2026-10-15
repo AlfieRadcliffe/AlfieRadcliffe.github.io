@@ -19,8 +19,8 @@ First-year average: 80%+ (First Class).
 I care about both sides of software: how it works under the hood,
 and how it feels to the person using it.
 
-Under the hood: I'm building a real-time multiplayer game server in
-C, and next, a small x86 operating system written from scratch.
+Next up: an online party game friends can join from any browser,
+with real-time multiplayer and art I draw by hand.
 
 The human side: I love HCI and design with personality, especially
 hand-drawn elements. The doodle guy on this site is my own drawing.
@@ -54,8 +54,8 @@ linkedin   ${LINKEDIN}
 Tip: run "open email", "open github" or "open linkedin".`,
     plan:
 `Current focus
-  [ ] Get the game server's UDP packet layer working
-  [ ] Start the OS: boot to "Hello, kernel" in QEMU
+  [ ] Pick the party game idea and sketch the rules on paper
+  [ ] Draw the first characters and scan them in
   [ ] Land a 2027–28 placement   <- you can help with this one`,
   };
 
@@ -224,9 +224,9 @@ ${H("SYNOPSIS")}
 ${H("DESCRIPTION")}
        Second-year BSc Computer Science student at Newcastle
        University with a first-year average of 80%+. Writes C,
-       Python and Java. Builds low-level things (a game server,
-       an operating system) and loves HCI, interface design and
-       hand-drawn, characterful visuals.
+       Python and Java. Building an online multiplayer party
+       game, and loves HCI, interface design and hand-drawn,
+       characterful visuals.
 
 ${H("OPTIONS")}
        <span class="u">--placement</span>   12-month industrial placement, 2027-28.

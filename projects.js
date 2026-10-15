@@ -50,52 +50,28 @@ window.PROJECTS = [
     ],
   },
   {
-    title: "Real-time multiplayer game server",
-    status: "in-progress",
-    featured: true,
-    tagline:
-      "An authoritative game server in C that keeps players in sync over an unreliable network.",
-    problem:
-      "Online games feel instant even though packets take tens of milliseconds and sometimes never arrive. " +
-      "I want to understand — and build — the techniques that make that possible, putting my Networks module into practice.",
-    built:
-      "A UDP server running a fixed-rate simulation tick, with a lightweight client. Clients send inputs, the server " +
-      "is the single source of truth, and clients use prediction and reconciliation to hide latency.",
-    hardest: "",
-    metrics: [],
-    tags: ["C", "UDP sockets", "Networking", "Linux"],
-    milestones: [
-      { text: "UDP client/server with a custom binary packet format", done: false },
-      { text: "Fixed-timestep authoritative simulation loop", done: false },
-      { text: "Client-side prediction and server reconciliation", done: false },
-      { text: "Entity interpolation and lag compensation", done: false },
-      { text: "Load test: many simulated clients, measure tick time and bandwidth", done: false },
-    ],
-    media: null,
-    links: [],
-  },
-  {
-    title: "Hobby operating system",
+    title: "Hand-drawn online party game",
     status: "planned",
     featured: true,
     tagline:
-      "A small x86 operating system written from scratch in C and assembly.",
+      "A multiplayer browser party game for friends to play together, with every character and scene drawn by hand.",
     problem:
-      "Everything I write runs on top of an OS I've never looked inside. Building one is the most direct way to " +
-      "understand memory, interrupts and processes at the lowest level.",
+      "Online party games like Gartic Phone and Ultimate Chicken Horse are some of the most fun I've had with friends. " +
+      "I want to build one end to end: real-time networking, game design that's easy to pick up, and an art style that's mine.",
     built:
-      "A kernel that boots on real hardware or QEMU, takes control of the CPU, manages memory and runs multiple " +
-      "processes, finishing with a simple interactive shell.",
+      "Players join a room with a short code from any browser, no download needed. The game stays in sync in real time " +
+      "over WebSockets, and all the art is drawn by me on paper, then scanned and cleaned up into black-and-white sprites.",
     hardest: "",
     metrics: [],
-    tags: ["C", "x86 Assembly", "QEMU", "Low-level"],
+    tags: ["JavaScript", "WebSockets", "Node.js", "HTML Canvas", "Game design"],
     milestones: [
-      { text: "Boot into a kernel and print to the screen (VGA text mode)", done: false },
-      { text: "Interrupt handling (GDT, IDT) and a keyboard driver", done: false },
-      { text: "Physical memory manager and paging", done: false },
-      { text: "Kernel heap (malloc/free)", done: false },
-      { text: "Pre-emptive round-robin process scheduler", done: false },
-      { text: "Simple interactive shell", done: false },
+      { text: "Pick the game idea and sketch the rules on paper", done: false },
+      { text: "Lobby: create a room, share a code, see who's joined", done: false },
+      { text: "Real-time sync between players over WebSockets", done: false },
+      { text: "Core game loop: rounds, scoring and a winner", done: false },
+      { text: "Hand-drawn art scanned in and animated", done: false },
+      { text: "Playtest with friends, fix what confuses people", done: false },
+      { text: "Deploy online so anyone can play", done: false },
     ],
     media: null,
     links: [],
