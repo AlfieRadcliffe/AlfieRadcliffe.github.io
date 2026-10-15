@@ -60,13 +60,14 @@ window.PROJECTS = [
       "end to end: multiplayer networking, game design that's easy to pick up, and an art style that's mine.",
     built:
       "Each player makes a little golfer (hair, face, shirt, trousers) and picks a club with its own ability, like a ruler " +
-      "that previews your shot or a highlighter that glides through ink. Before each hole everyone places a trap: pencil " +
-      "walls are common, while scissors and hole-punch portals are rare. Then it's turns putting, with a choppy hand-drawn " +
-      "swing. You only score if you sink it and someone else doesn't, so traps have to be mean but not impossible.",
+      "that previews your shot or a highlighter that glides through ink. Each round everyone adds a trap to the same page, " +
+      "so it gets harder and harder until nobody can finish it and it's torn out. Pencil walls are common; scissors, " +
+      "hole-punch portals and bombs that blow up other people's traps are rarer. You only score if you sink it and someone " +
+      "else doesn't (with a bonus for the fewest shots), so traps have to be mean but not impossible.",
     hardest:
       "Physics that's fair and repeatable. It runs on a fixed time step, so the same shot always plays out identically, " +
       "which is also what will let every player's browser replay shots in sync once it's online.",
-    metrics: ["10 holes", "10 traps", "6 clubs"],
+    metrics: ["10 pages", "10 traps + bombs", "6 clubs"],
     tags: ["JavaScript", "HTML Canvas", "Node.js", "WebSockets", "Game design"],
     milestones: [
       { text: "Pick the game idea and sketch the rules on paper", done: true },
