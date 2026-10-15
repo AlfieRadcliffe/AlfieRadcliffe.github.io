@@ -142,10 +142,12 @@ Tip: run "open email", "open github" or "open linkedin".`,
   function react(name, ok, args) {
     const b = buddy();
     if (!b) return;
-    if (!ok) { b.say("Hmm? Try help", 2500); return; }
+    if (!ok) { b.think(2500); b.say("hmm? try help", 2500); return; }
     if (name === "sudo" && args.join(" ").toLowerCase() === "hire alfie") { b.happy(2500); b.wave(2500); b.say("YES!! 🎉", 3000); return; }
-    if (name === "sudo") { b.say("Nice try 😏", 2500); return; }
+    if (name === "sudo") { b.surprised(1500); b.say("nice try 😏", 2500); return; }
     b.say(REACTIONS[name] || "Cool!", 3500);
+    if (name === "rm") b.surprised(2000);
+    if (name === "ping" || name === "history") b.think(1800);
     if (name === "man" || name === "neofetch") b.wave(1600);
   }
 

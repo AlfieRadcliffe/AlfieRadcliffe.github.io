@@ -120,7 +120,7 @@
     });
     function draw() {
       btns.forEach((b, i) => b.classList.toggle("sel", i === sel));
-      if (alfie) alfie.say(sel ? "ooh, hacker mode!" : "nice and simple!");
+      if (alfie) { alfie.say(sel ? "ooh, hacker mode!" : "nice and simple!"); if (sel) alfie.surprised(900); else alfie.happy(900); }
     }
     draw();
     btns[0].focus({ preventScroll: true });

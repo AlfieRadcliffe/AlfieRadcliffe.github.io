@@ -1,16 +1,18 @@
 /* ============================================================
-   Alfie: the AlfieOS mascot, from Alfie's own drawing
-   (assets/alfie.png, ink on a transparent background).
+   Alfie: the AlfieOS mascot, from Alfie's own drawing.
 
-   Animated like hand-drawn cartoons: a "line boil" filter
-   re-wobbles the ink a few times a second, and poses change at
-   a low, choppy frame rate. The right arm is a separate cut-out
-   of the same drawing so it can swing up to wave.
+   The drawing is split into stacked layers (assets/alfie/):
+     base.png             everything that never changes (+ mole)
+     face-*.png           normal, blink, happy, surprised, think
+     arm-*.png            down (original), wave-1, wave-2
+   Frames are swapped at a low, choppy frame rate and a "line boil"
+   filter re-wobbles the ink, like hand-drawn animation.
 
-   Usage (auto): <div data-alfie data-alfie-scale="10"
-                       data-alfie-wave data-alfie-say="Hi!"></div>
+   Usage (auto): <div data-alfie data-alfie-scale="10" data-alfie-wave
+                       data-alfie-face="think" data-alfie-say="Hi!"></div>
    Usage (JS):   const a = AlfieSprite.mount(el, { scale: 10 });
                  a.say("Hello", 2000); a.wave(1500); a.happy(1500);
+                 a.surprised(1200); a.think(2000);
    ============================================================ */
 (function () {
   const INK = "#262123";
@@ -19,13 +21,13 @@
 
   // Image paths are resolved next to this script, so pages in any folder work
   const here = (document.currentScript && document.currentScript.src) || location.href;
-  const IMG = new URL("assets/alfie.png", here).href;
+  const src = (name) => new URL(`assets/alfie/${name}.png`, here).href;
   const HEAD = new URL("assets/alfie-head.png", here).href;
   const RATIO = 729 / 565; // drawing height / width
-
-  // The right arm's cut-out box and shoulder pivot, as % of the drawing
-  const ARM = { left: 72.9, top: 37, bottom: 55.6, pivotX: 73.3, pivotY: 47.3 };
-  const MOLE = { x: 31.9, y: 32.6 }; // small mole, top-left of the mouth
+  const FACES = ["normal", "blink", "happy", "surprised", "think"];
+  const ARMS = ["down", "wave-1", "wave-2"];
+  // Preload every frame so swaps never flicker
+  [...FACES.map((f) => "face-" + f), ...ARMS.map((a) => "arm-" + a), "base"].forEach((n) => { new Image().src = src(n); });
 
   /* ---------- Line boil: shared SVG filter, re-seeded on a timer ---------- */
   function ensureBoil() {
@@ -57,21 +59,16 @@
     fig.setAttribute("role", "img");
     fig.setAttribute("aria-label", opts.label || "Alfie's hand-drawn doodle of himself");
     fig.style.cssText = "position:absolute;inset:0;filter:url(#alfie-boil)";
-    const layer = (clip) => {
+    const layer = (name) => {
       const img = document.createElement("img");
-      img.src = IMG; img.alt = ""; img.draggable = false;
-      img.style.cssText = `position:absolute;inset:0;width:100%;height:100%;clip-path:${clip};user-select:none`;
+      img.src = src(name); img.alt = ""; img.draggable = false;
+      img.style.cssText = "position:absolute;inset:0;width:100%;height:100%;user-select:none";
       fig.appendChild(img);
       return img;
     };
-    const A = ARM;
-    const body = layer(`polygon(0 0,100% 0,100% ${A.top}%,${A.left}% ${A.top}%,${A.left}% ${A.bottom}%,100% ${A.bottom}%,100% 100%,0 100%)`);
-    const arm = layer(`polygon(${A.left}% ${A.top}%,100% ${A.top}%,100% ${A.bottom}%,${A.left}% ${A.bottom}%)`);
-    arm.style.transformOrigin = `${A.pivotX}% ${A.pivotY}%`;
-    const mole = document.createElement("span");
-    const dot = Math.max(2, Math.round(width / 120));
-    mole.style.cssText = `position:absolute;left:${MOLE.x}%;top:${MOLE.y}%;width:${dot * 2}px;height:${dot * 2}px;border-radius:50%;background:${INK}`;
-    fig.appendChild(mole);
+    layer("base");
+    const faceImg = layer("face-normal");
+    const armImg = layer("arm-down");
     wrap.appendChild(fig);
 
     const bubble = document.createElement("span");
@@ -80,21 +77,33 @@
     wrap.appendChild(bubble);
     el.appendChild(wrap);
 
-    let tick = 0, waveUntil = opts.wave ? Infinity : 0, happyUntil = 0, sayTimer = null;
+    const restFace = FACES.includes(opts.face) ? opts.face : "normal";
+    let tick = 0, blinkUntil = -1, nextBlink = 12 + Math.random() * 20;
+    let waveUntil = opts.wave ? Infinity : 0, mood = null, moodUntil = 0, sayTimer = null;
+    let shownFace = "normal", shownArm = "down";
 
+    function show(img, name, current) { if (name !== current) img.src = src(name); return name; }
     function render() {
-      const happy = tick < happyUntil, waving = tick < waveUntil;
+      const moody = tick < moodUntil ? mood : null;
+      const waving = tick < waveUntil;
+      let face = moody || (tick < blinkUntil ? "blink" : restFace);
+      let arm = waving ? (reduced ? "wave-1" : Math.floor(tick / 2) % 2 ? "wave-2" : "wave-1") : moody === "happy" ? "wave-1" : "down";
+      shownFace = show(faceImg, "face-" + face, "face-" + shownFace).slice(5);
+      shownArm = show(armImg, "arm-" + arm, "arm-" + shownArm).slice(4);
       // Stepped poses, no tweening: that's what makes it feel hand-animated
-      const bob = reduced ? 0 : happy ? (tick % 2 ? -12 : 0) : (Math.floor(tick / 4) % 2) * 3;
-      const tilt = reduced ? 0 : happy ? (tick % 2 ? 3 : -3) : (Math.floor(tick / 6) % 2 ? 1.2 : -1.2);
+      const bob = reduced ? 0 : moody === "happy" ? (tick % 2 ? -12 : 0) : moody === "surprised" ? -6 : (Math.floor(tick / 4) % 2) * 3;
+      const tilt = reduced ? 0 : moody === "happy" ? (tick % 2 ? 3 : -3) : moody === "think" ? -4 : (Math.floor(tick / 6) % 2 ? 1.2 : -1.2);
       fig.style.transform = `translateY(${bob}px) rotate(${tilt}deg)`;
-      const armRot = waving ? (reduced ? -40 : Math.floor(tick / 2) % 2 ? -55 : -28) : happy ? -35 : 0;
-      arm.style.transform = `rotate(${armRot}deg)`;
     }
-    const timer = reduced ? null : setInterval(() => { tick++; render(); }, FPS_MS);
+    const timer = reduced ? null : setInterval(() => {
+      tick++;
+      if (tick > nextBlink) { blinkUntil = tick + 1; nextBlink = tick + 14 + Math.random() * 26; }
+      render();
+    }, FPS_MS);
     render();
 
     const frames = (ms) => Math.round(ms / FPS_MS);
+    const feel = (name) => (dur) => { mood = name; moodUntil = tick + frames(dur || 1500); render(); };
     const ctl = {
       el: wrap,
       say(text, dur) {
@@ -104,7 +113,9 @@
       },
       wave(dur) { waveUntil = dur ? tick + frames(dur) : Infinity; render(); },
       stopWave() { waveUntil = 0; render(); },
-      happy(dur) { happyUntil = tick + frames(dur || 1500); render(); },
+      happy: feel("happy"),
+      surprised: feel("surprised"),
+      think: feel("think"),
       destroy() { clearInterval(timer); wrap.remove(); },
     };
     if (opts.say) ctl.say(opts.say);
@@ -131,6 +142,7 @@
       const ctl = mount(el, {
         scale: +el.dataset.alfieScale || 6,
         wave: el.hasAttribute("data-alfie-wave"),
+        face: el.dataset.alfieFace,
         say: el.dataset.alfieSay,
       });
       if (el.hasAttribute("data-alfie-left")) ctl.el.querySelector(".alfie-bubble").classList.add("left");
