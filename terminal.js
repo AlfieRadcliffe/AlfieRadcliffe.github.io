@@ -16,10 +16,14 @@
 Second-year BSc Computer Science student, Newcastle University.
 First-year average: 80%+ (First Class).
 
-I like knowing how things actually work: what code is doing to the
-network, the memory and the CPU. That's why my projects lean towards
-systems programming: a real-time multiplayer game server in C, and
-next, a small x86 operating system written from scratch.
+I care about both sides of software: how it works under the hood,
+and how it feels to the person using it.
+
+Under the hood: I'm building a real-time multiplayer game server in
+C, and next, a small x86 operating system written from scratch.
+
+The human side: I love HCI and design with personality, especially
+hand-drawn elements. The doodle guy on this site is my own drawing.
 
 Looking for: a 12-month industrial placement, 2027–28, in any
 software engineering team. Based in Newcastle; open to relocation
@@ -29,6 +33,8 @@ and remote work.`,
 CONCEPTS    Algorithms & data structures, networking (TCP/UDP,
             sockets), security programming
 TOOLS       Git & GitHub, Linux, VS Code
+INTERESTS   HCI, interface design, aesthetic web design,
+            hand-drawn illustration
 
 ★ = strongest`,
     experience:
@@ -210,7 +216,7 @@ Tip: run "open email", "open github" or "open linkedin".`,
 `${H("ALFIE(1)")}                  User Commands                  ${H("ALFIE(1)")}
 
 ${H("NAME")}
-       alfie - systems-minded CS student, available for placement
+       alfie - CS student who cares how software works and how it feels
 
 ${H("SYNOPSIS")}
        ${H("alfie")} [<span class="u">--placement</span>=2027-28] [<span class="u">--relocate</span>] [<span class="u">--remote</span>]
@@ -218,8 +224,9 @@ ${H("SYNOPSIS")}
 ${H("DESCRIPTION")}
        Second-year BSc Computer Science student at Newcastle
        University with a first-year average of 80%+. Writes C,
-       Python and Java. Most at home close to the hardware:
-       networks, operating systems, performance-critical code.
+       Python and Java. Builds low-level things (a game server,
+       an operating system) and loves HCI, interface design and
+       hand-drawn, characterful visuals.
 
 ${H("OPTIONS")}
        <span class="u">--placement</span>   12-month industrial placement, 2027-28.
@@ -229,6 +236,9 @@ ${H("OPTIONS")}
 ${H("SKILLS")}
        C, Python, Java, HTML, CSS (strong); SQL; Git, Linux.
        Algorithms, networking (TCP/UDP), security programming.
+
+${H("INTERESTS")}
+       HCI, interface design, aesthetic web design, doodling.
 
 ${H("PROJECTS")}
 ${PROJECTS.map((p) => `       ${esc(p.title)} <span class="d">(${esc(p.status)})</span>`).join("\n")}
