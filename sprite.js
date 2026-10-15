@@ -11,7 +11,7 @@
 (function () {
   const PAL = {
     K: "#2a1840", // outline
-    H: "#7b4a2a", h: "#b0703f", // hair + highlight
+    H: "#7b4a2a", h: "#b0703f", d: "#5a3418", // hair, curl highlight, curl shadow
     S: "#ffd9b8", C: "#ff9fb0", // skin, blush
     B: "#2f8bff", b: "#10388f", W: "#ffffff", // eyes
     M: "#4a2a1c", // mole
@@ -21,19 +21,19 @@
   };
   // prettier-ignore
   const BASE = [
-    ".....KKK.KKK.KKK....", // fluffy hair tufts
-    "....KHHHKHHHKHHHK...",
-    "...KHHhHHHHHHHHHHK..",
-    "..KHHhhHHHHHHHHHHHK.",
-    ".KHHhHHHHHHHHHHHHHHK",
-    ".KHHHHHHHHHHHHHHhHHK",
-    "KHHHHHHHHHHHHHHHHHHK",
-    "KHHHHHHHHHHHHHHHHHHK",
-    "KHHHHHHSHHHHSHHHHHHK", // fringe
-    "KHHHHSSSSHHSSSSHHHHK",
-    ".KHHSSSSSSSSSSSSHHK.",
+    "......KK.KK.KK......", // curly hair
+    "....KKHHKHHKHHKK....",
+    "...KHhdHHhdHHhdHK...",
+    "..KHdHhHdHhHdHhHdK..",
+    ".KHhHdHHhHdHHhHdHHK.",
+    "KHdHHhHdHHhHdHHhHdHK",
+    "KhHdHHhdHHHhdHHdHhHK",
+    "KHdHhHdHHdHHhdHHdHdK",
+    "KdHhdHHdhHHdhHHdhHdK", // curly fringe
+    "KHdHHhSSdHHdSShHdHHK",
+    ".KHdSSSSdSSdSSSSdHK.",
     ".KHHSSBWSSSSBWSSHHK.", // blue eyes
-    ".KHHSSBbSSSSBbSSHHK.",
+    ".KdHSSBbSSSSBbSSHdK.",
     "..KSSCSSSSSSSSCSSK..",
     "...KSSSSMSSSSSSSK...", // M = mole, top-left of the mouth
     "...KSSSSSmmSSSSSK...",
