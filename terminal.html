@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alfie Radcliffe — Terminal</title>
+<meta name="description" content="Explore Alfie Radcliffe's portfolio from a shell: ls, cat, man alfie, neofetch.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%2305070c'/><text x='32' y='42' font-family='monospace' font-weight='700' font-size='26' fill='%2360a5fa' text-anchor='middle'>&gt;_</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #05070c; --text: #cbd5e1; --dim: #64748b; --bright: #f3f4f6;
+    --blue: #60a5fa; --red: #f87171; --green: #4ade80; --bar: #0b1020; --border: #1e293b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { background: var(--bg); color: var(--text); font: 14px/1.6 "JetBrains Mono", ui-monospace, Consolas, monospace; display: flex; flex-direction: column; }
+  a { color: var(--blue); }
+
+  .bar { display: flex; align-items: center; gap: 12px; padding: 8px 16px; background: var(--bar); border-bottom: 1px solid var(--border); font-size: 12px; flex-wrap: wrap; }
+  .dots { display: flex; gap: 6px; }
+  .dots i { width: 11px; height: 11px; border-radius: 50%; background: #334155; display: block; }
+  .dots i:first-child { background: var(--red); }  .dots i:nth-child(2) { background: #fbbf24; }  .dots i:nth-child(3) { background: var(--green); }
+  .bar .title { color: var(--dim); flex: 1; }
+  .bar a { color: var(--text); text-decoration: none; border: 1px solid var(--border); padding: 2px 10px; border-radius: 6px; }
+  .bar a:hover { border-color: var(--blue); color: var(--blue); }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 16px 0; }
+  .chips button { font: inherit; font-size: 12px; background: none; color: var(--dim); border: 1px dashed var(--border); border-radius: 6px; padding: 2px 9px; cursor: pointer; }
+  .chips button:hover { color: var(--blue); border-color: var(--blue); }
+
+  #term { flex: 1; overflow-y: auto; padding: 14px 16px 40px; cursor: text; }
+  #out div { white-space: pre-wrap; word-break: break-word; min-height: 1.6em; }
+  .line { display: flex; flex-wrap: wrap; }
+  .prompt { color: var(--green); white-space: pre; }
+  .prompt b { color: var(--blue); font-weight: 400; }
+  #in { flex: 1; min-width: 120px; background: none; border: 0; outline: 0; color: var(--bright); font: inherit; caret-color: var(--red); }
+  .dir { color: var(--blue); font-weight: 700; }  .pdf { color: var(--red); }  .hid { color: var(--dim); }
+  .b { color: var(--bright); font-weight: 700; }  .d { color: var(--dim); }  .r { color: var(--red); }  .g { color: var(--green); }  .u { color: var(--blue); }
+  @media (max-width: 520px) { body { font-size: 12.5px; } }
+</style>
+</head>
+<body>
+  <div class="bar">
+    <div class="dots"><i></i><i></i><i></i></div>
+    <span class="title">alfie@alfieos: ~ — alfsh</span>
+    <a href="index.html">← Recruiter mode</a>
+  </div>
+  <div class="chips" aria-label="Suggested commands">
+    <button>help</button><button>ls ~/projects</button><button>cat about.txt</button>
+    <button>man alfie</button><button>neofetch</button><button>ping</button><button>open cv.pdf</button>
+  </div>
+  <main id="term" aria-live="polite">
+    <div id="out"></div>
+    <div class="line"><span class="prompt" id="ps"></span><input id="in" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Terminal input" autofocus></div>
+  </main>
+
+  <script src="projects.js"></script>
+  <script src="terminal.js"></script>
+</body>
+</html>

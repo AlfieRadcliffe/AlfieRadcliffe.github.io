@@ -13,6 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="projects.js"></script>
 <style>
   /* Colour tokens — blue is the main accent, red the highlight */
   :root {
@@ -181,9 +182,16 @@
   .contact p { color: var(--muted); max-width: 540px; margin: 0 auto 28px; }
   .contact .btns { justify-content: center; }
   footer { padding: 32px 0; text-align: center; color: var(--muted); font-size: 13px; border-top: 1px solid var(--border); }
+  footer .sys { font-family: "JetBrains Mono", monospace; font-size: 12px; margin-top: 8px; }
+  footer .sys b { color: var(--red); font-weight: 500; }
+  footer button { background: none; border: 0; color: var(--blue); font: inherit; cursor: pointer; padding: 0; }
+  footer button:hover { text-decoration: underline; }
+  nav ul a.term-link { color: var(--red); border: 1px solid var(--border); padding: 2px 8px; border-radius: 6px; font-size: 13px; }
+  nav ul a.term-link:hover { border-color: var(--red); }
 </style>
 </head>
 <body>
+<script src="boot.js"></script>
 
 <nav>
   <div class="wrap">
@@ -194,6 +202,7 @@
       <li class="hide-sm"><a href="#skills">Skills</a></li>
       <li class="hide-sm"><a href="#experience">Experience</a></li>
       <li><a href="#contact">Contact</a></li>
+      <li><a href="terminal.html" class="mono term-link" title="Explore this portfolio from a shell">&gt;_ terminal</a></li>
       <li><button id="theme" aria-label="Toggle light/dark theme" title="Toggle theme">◐</button></li>
     </ul>
   </div>
@@ -349,10 +358,28 @@
 </section>
 
 <footer>
-  <div class="wrap">© <span id="year">2026</span> Alfie Radcliffe · Hand-built with HTML, CSS &amp; JavaScript · <a href="https://github.com/AlfieRadcliffe/AlfieRadcliffe.github.io" target="_blank" rel="noopener">Source</a></div>
+  <div class="wrap">© <span id="year">2026</span> Alfie Radcliffe · Hand-built with HTML, CSS &amp; JavaScript · <a href="https://github.com/AlfieRadcliffe/AlfieRadcliffe.github.io" target="_blank" rel="noopener">Source</a> · <button type="button" onclick="alfieReboot()">Reboot</button></div>
+  <div class="wrap sys" id="sys" hidden></div>
 </footer>
 
-<script src="projects.js"></script>
+<script>
+  // ---------- Live page stats (real numbers from the browser's Performance API) ----------
+  addEventListener("load", () => setTimeout(() => {
+    const nav = performance.getEntriesByType("navigation")[0];
+    const res = performance.getEntriesByType("resource");
+    const bytes = [nav, ...res].reduce((n, e) => n + (e ? e.encodedBodySize || 0 : 0), 0);
+    if (!nav || !bytes) return; // not available when opened as a local file
+    const ms = Math.round(nav.loadEventEnd - nav.startTime);
+    const sys = document.getElementById("sys");
+    sys.innerHTML = `this page: <b>${(bytes / 1024).toFixed(1)} KB</b> · <b>0</b> frameworks · loaded in <b>${ms} ms</b>`;
+    sys.hidden = false;
+  }, 0));
+
+  // ---------- Console easter egg ----------
+  console.log("%c>_ AlfieOS", "font: 700 20px monospace; color: #60a5fa");
+  console.log("%cOh hey, you opened the console. We'd probably get on.\nPrefer a shell? → /terminal.html\nSource: https://github.com/AlfieRadcliffe/AlfieRadcliffe.github.io\nSay hi: alfieradcliffe1234@gmail.com",
+    "font: 13px monospace; color: #94a3b8");
+</script>
 <script>
   // ---------- Theme toggle (remembered per browser) ----------
   const root = document.documentElement;
