@@ -59,24 +59,28 @@ window.PROJECTS = [
       "Online party games like Ultimate Chicken Horse are some of the most fun I've had with friends. I want to build one " +
       "end to end: multiplayer networking, game design that's easy to pick up, and an art style that's mine.",
     built:
-      "Friends join a room with a short code from any browser. Before each hole, everyone secretly places a trap (ink blots, " +
-      "eraser walls, springs) and then takes turns putting. You only score if you sink it and someone else doesn't, so traps " +
-      "have to be mean but not impossible. All the art is drawn by me on paper, then scanned into black-and-white sprites.",
-    hardest: "",
-    metrics: [],
+      "Each player makes a little golfer (hair, face, shirt, trousers) and picks a club with its own ability, like a ruler " +
+      "that previews your shot or a highlighter that glides through ink. Before each hole everyone places a trap: pencil " +
+      "walls are common, while scissors and hole-punch portals are rare. Then it's turns putting, with a choppy hand-drawn " +
+      "swing. You only score if you sink it and someone else doesn't, so traps have to be mean but not impossible.",
+    hardest:
+      "Physics that's fair and repeatable. It runs on a fixed time step, so the same shot always plays out identically, " +
+      "which is also what will let every player's browser replay shots in sync once it's online.",
+    metrics: ["10 holes", "10 traps", "6 clubs"],
     tags: ["JavaScript", "HTML Canvas", "Node.js", "WebSockets", "Game design"],
     milestones: [
       { text: "Pick the game idea and sketch the rules on paper", done: true },
       { text: "Single player: drag to putt a ball around a page", done: true },
       { text: "Courses: walls, a hole, and sinking the ball", done: true },
       { text: "Traps: place them and make them affect the ball", done: true },
+      { text: "Golfers: character creator, clubs and swing animation", done: true },
+      { text: "Rounds, scoring and a winner", done: true },
       { text: "Lobby: create a room, share a code, see who's joined", done: false },
       { text: "Multiplayer turns synced between players", done: false },
-      { text: "Rounds, scoring and a winner", done: true },
       { text: "Hand-drawn art scanned in and animated", done: false },
       { text: "Playtest with friends and deploy online", done: false },
     ],
     media: "assets/projects/pen-golf.png",
-    links: [],
+    links: [{ label: "Source code", url: "https://github.com/AlfieRadcliffe/DoodleGolf" }],
   },
 ];
