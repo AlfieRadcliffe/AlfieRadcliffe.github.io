@@ -128,6 +128,27 @@ Tip: run "open email", "open github" or "open linkedin".`,
   function promptHTML() { return `alfie@alfieos:<b>${esc(pretty(cwd))}</b>$ `; }
   function setPrompt() { ps.innerHTML = promptHTML(); }
 
+  const sprites = []; // neofetch portraits, stopped on clear
+  function clearScreen() { sprites.splice(0).forEach((s) => s.destroy()); out.innerHTML = ""; }
+
+  /* ---------- Buddy Alfie (stands on the grass and reacts) ---------- */
+  const REACTIONS = {
+    help: "Lots to explore!", ls: "Have a look around", cat: "Good read, that one", cd: "Wheee!",
+    man: "That's me!", neofetch: "Ooh, nice portrait", ping: "Packets go brrr", open: "Opening it now…",
+    whoami: "You're awesome :)", history: "We've done a lot!", clear: "Squeaky clean ✨", rm: "Hey! Careful!",
+    vim: "Good luck escaping…", echo: "…echo…", exit: "Bye!", reboot: "See you soon!",
+  };
+  function buddy() { const b = document.getElementById("buddy"); return b && b.alfie; }
+  function react(name, ok, args) {
+    const b = buddy();
+    if (!b) return;
+    if (!ok) { b.say("Hmm? Try help", 2500); return; }
+    if (name === "sudo" && args.join(" ").toLowerCase() === "hire alfie") { b.happy(2500); b.wave(2500); b.say("YES!! 🎉", 3000); return; }
+    if (name === "sudo") { b.say("Nice try 😏", 2500); return; }
+    b.say(REACTIONS[name] || "Cool!", 3500);
+    if (name === "man" || name === "neofetch") b.wave(1600);
+  }
+
   /* ---------- Commands ---------- */
   const history = [];
   let hIdx = 0, busy = false, cancel = null;
@@ -222,15 +243,7 @@ ${H("SEE ALSO")}
 
 AlfieOS 2.0                       ${new Date().getFullYear()}                       ${H("ALFIE(1)")}`);
     }},
-    neofetch: { desc: "system info", run() {
-      const logo = [
-        "    ___    ____  ",
-        "   /   |  / __ \\ ",
-        "  / /| | / /_/ / ",
-        " / ___ |/ _, _/  ",
-        "/_/  |_/_/ |_|   ",
-        "                 ", "                 ", "                 ", "                 ", "                 ",
-      ];
+    neofetch: { desc: "system info (with a portrait)", run() {
       const info = [
         `<span class="u">alfie</span>@<span class="u">alfieos</span>`,
         `<span class="d">---------------</span>`,
@@ -243,7 +256,16 @@ AlfieOS 2.0                       ${new Date().getFullYear()}                   
         `<span class="r">Avg</span>: 80%+ (First)`,
         `<span class="r">Status</span>: seeking 2027–28 placement`,
       ];
-      html(logo.map((l, i) => `<span class="u">${esc(l)}</span>  ${info[i] || ""}`).join("\n"));
+      const row = document.createElement("div");
+      row.className = "fetch";
+      const pic = document.createElement("div");
+      row.appendChild(pic);
+      const pre = document.createElement("pre");
+      pre.innerHTML = info.join("\n");
+      row.appendChild(pre);
+      out.appendChild(row);
+      if (window.AlfieSprite) sprites.push(AlfieSprite.mount(pic, { scale: 6 }));
+      scroll();
     }},
     ping: { desc: "measure real latency to a host", async run(args) {
       const self = !args[0] && location.protocol.startsWith("http");
@@ -279,7 +301,7 @@ AlfieOS 2.0                       ${new Date().getFullYear()}                   
     echo: { desc: "print text", run(args) { print(args.join(" ")); } },
     date: { run() { print(new Date().toString()); } },
     uname: { run(args) { print(args.includes("-a") ? "AlfieOS alfieos 2.0-cs #1 SMP x86_64 alfsh" : "AlfieOS"); } },
-    clear: { desc: "clear the screen", run() { out.innerHTML = ""; } },
+    clear: { desc: "clear the screen", run() { clearScreen(); } },
     sudo: { run(args) {
       if (args.join(" ").toLowerCase() === "hire alfie")
         return html(`[sudo] password for recruiter: ********\n<span class="g">Access granted.</span> Excellent decision.\nNext step: ${link("mailto:" + EMAIL, EMAIL)}`);
@@ -301,7 +323,8 @@ AlfieOS 2.0                       ${new Date().getFullYear()}                   
     history.push(trimmed); hIdx = history.length;
     const [name, ...args] = trimmed.split(/\s+/);
     const cmd = COMMANDS[name.toLowerCase()];
-    if (!cmd) { html(`alfsh: command not found: ${esc(name)}. Type <span class="g">help</span> for a list.`); return; }
+    if (!cmd) { html(`alfsh: command not found: ${esc(name)}. Type <span class="g">help</span> for a list.`); react(name, false); return; }
+    react(name.toLowerCase(), true, args);
     busy = true;
     try { await cmd.run(args); } catch (e) { print("error: " + e.message, "r"); }
     busy = false; cancel = null; setPrompt(); scroll();
@@ -341,12 +364,13 @@ AlfieOS 2.0                       ${new Date().getFullYear()}                   
     else if (e.key === "Tab") { e.preventDefault(); complete(); }
     else if (e.key === "ArrowUp") { if (hIdx > 0) input.value = history[--hIdx]; e.preventDefault(); }
     else if (e.key === "ArrowDown") { hIdx = Math.min(history.length, hIdx + 1); input.value = history[hIdx] || ""; e.preventDefault(); }
-    else if (e.key === "l" && e.ctrlKey) { e.preventDefault(); out.innerHTML = ""; }
+    else if (e.key === "l" && e.ctrlKey) { e.preventDefault(); clearScreen(); }
     else if (e.key === "c" && e.ctrlKey && input.selectionStart === input.selectionEnd) { html(promptHTML() + esc(input.value) + "^C"); input.value = ""; }
   });
   document.addEventListener("keydown", (e) => { if (busy && e.key === "c" && e.ctrlKey && cancel) cancel(); });
   term.addEventListener("click", () => { if (!getSelection().toString()) input.focus(); });
   document.querySelectorAll(".chips button").forEach((b) => b.addEventListener("click", () => { submit(b.textContent); input.focus(); }));
+  document.querySelectorAll("[data-cmd]").forEach((b) => b.addEventListener("click", () => { submit(b.dataset.cmd); input.focus(); }));
 
   /* ---------- Boot ---------- */
   setPrompt();

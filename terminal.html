@@ -5,59 +5,133 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Alfie Radcliffe — Terminal</title>
 <meta name="description" content="Explore Alfie Radcliffe's portfolio from a shell: ls, cat, man alfie, neofetch.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%2305070c'/><text x='32' y='42' font-family='monospace' font-weight='700' font-size='26' fill='%2360a5fa' text-anchor='middle'>&gt;_</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Pixelify+Sans:wght@500;700&display=swap" rel="stylesheet">
+<script src="sprite.js"></script>
 <style>
   :root {
-    --bg: #05070c; --text: #cbd5e1; --dim: #64748b; --bright: #f3f4f6;
-    --blue: #60a5fa; --red: #f87171; --green: #4ade80; --bar: #0b1020; --border: #1e293b;
+    --ink: #1b1430; --term: #17122b; --text: #e6e1ff; --dim: #8f88b5; --bright: #ffffff;
+    --blue: #6ea8ff; --red: #ff6b7a; --green: #5cf0a8; --yellow: #ffd23f;
+    --pixel: "Pixelify Sans", "JetBrains Mono", monospace;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { height: 100%; }
-  body { background: var(--bg); color: var(--text); font: 14px/1.6 "JetBrains Mono", ui-monospace, Consolas, monospace; display: flex; flex-direction: column; }
-  a { color: var(--blue); }
+  body { font: 14px/1.6 "JetBrains Mono", ui-monospace, Consolas, monospace; color: var(--ink); overflow: hidden;
+    background: linear-gradient(180deg, #6cc8ff 0%, #c9eeff 80%); }
 
-  .bar { display: flex; align-items: center; gap: 12px; padding: 8px 16px; background: var(--bar); border-bottom: 1px solid var(--border); font-size: 12px; flex-wrap: wrap; }
-  .dots { display: flex; gap: 6px; }
-  .dots i { width: 11px; height: 11px; border-radius: 50%; background: #334155; display: block; }
-  .dots i:first-child { background: var(--red); }  .dots i:nth-child(2) { background: #fbbf24; }  .dots i:nth-child(3) { background: var(--green); }
-  .bar .title { color: var(--dim); flex: 1; }
-  .bar a { color: var(--text); text-decoration: none; border: 1px solid var(--border); padding: 2px 10px; border-radius: 6px; }
-  .bar a:hover { border-color: var(--blue); color: var(--blue); }
+  /* ---------- Wallpaper ---------- */
+  .sun { position: fixed; top: 64px; right: 7%; width: 80px; height: 80px; background: var(--yellow);
+    box-shadow: 0 0 0 8px rgba(255,210,63,.35), 0 0 0 16px rgba(255,210,63,.15);
+    clip-path: polygon(25% 0,75% 0,75% 12%,88% 12%,88% 25%,100% 25%,100% 75%,88% 75%,88% 88%,75% 88%,75% 100%,25% 100%,25% 88%,12% 88%,12% 75%,0 75%,0 25%,12% 25%,12% 12%,25% 12%); }
+  .cloud { position: fixed; height: 28px; background: #fff; animation: drift linear infinite;
+    clip-path: polygon(0 50%,12% 50%,12% 25%,30% 25%,30% 0,62% 0,62% 25%,80% 25%,80% 50%,100% 50%,100% 100%,0 100%); }
+  .cloud.c1 { width: 120px; top: 90px; animation-duration: 60s; animation-delay: -20s; }
+  .cloud.c2 { width: 150px; top: 220px; animation-duration: 90s; animation-delay: -60s; }
+  @keyframes drift { from { left: -180px; } to { left: 100%; } }
+  .ground { position: fixed; left: 0; right: 0; bottom: 0; height: 56px; border-top: 3px solid var(--ink);
+    background: #3ddc97 repeating-linear-gradient(90deg, #3ddc97 0 24px, #22b574 24px 32px, #3ddc97 32px 56px) top / 56px 12px repeat-x; }
 
-  .chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 16px 0; }
-  .chips button { font: inherit; font-size: 12px; background: none; color: var(--dim); border: 1px dashed var(--border); border-radius: 6px; padding: 2px 9px; cursor: pointer; }
-  .chips button:hover { color: var(--blue); border-color: var(--blue); }
+  /* ---------- Menu bar ---------- */
+  .menubar { position: fixed; top: 0; left: 0; right: 0; height: 44px; z-index: 5; display: flex; align-items: center; gap: 16px;
+    padding: 0 16px; background: var(--yellow); border-bottom: 3px solid var(--ink); font: 500 16px var(--pixel); }
+  .menubar .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 18px; }
+  .menubar img { width: 26px; height: 26px; image-rendering: pixelated; }
+  .menubar .sp { flex: 1; }
+  .menubar a { color: var(--ink); text-decoration: none; background: #fff; border: 2px solid var(--ink); border-radius: 8px; padding: 1px 10px; box-shadow: 2px 2px 0 var(--ink); }
+  .menubar a:hover { background: var(--ink); color: var(--yellow); }
 
-  #term { flex: 1; overflow-y: auto; padding: 14px 16px 40px; cursor: text; }
-  #out div { white-space: pre-wrap; word-break: break-word; min-height: 1.6em; }
+  /* ---------- Desktop icons ---------- */
+  .icons { position: fixed; top: 64px; left: 16px; display: grid; gap: 14px; z-index: 2; }
+  .icon { width: 88px; display: grid; justify-items: center; gap: 4px; background: none; border: 0; cursor: pointer;
+    font: 500 14px var(--pixel); color: var(--ink); text-align: center; }
+  .icon .pic { width: 52px; height: 52px; border: 3px solid var(--ink); border-radius: 10px; box-shadow: 3px 3px 0 var(--ink);
+    display: grid; place-items: center; font: 700 20px var(--pixel); background: #fff; transition: transform .1s; }
+  .icon:hover .pic { transform: translate(-2px,-2px) rotate(-3deg); }
+  .icon span { background: rgba(255,255,255,.85); padding: 0 5px; border-radius: 4px; }
+  @media (max-width: 1100px) { .icons { display: none; } }
+
+  /* ---------- Terminal window ---------- */
+  .win { position: fixed; z-index: 3; top: 64px; bottom: 84px; left: 50%; transform: translateX(-50%);
+    width: min(880px, calc(100vw - 32px)); display: flex; flex-direction: column;
+    background: var(--term); border: 3px solid var(--ink); border-radius: 14px; box-shadow: 8px 8px 0 var(--ink); overflow: hidden; }
+  .titlebar { display: flex; align-items: center; gap: 10px; padding: 7px 12px; background: #ff4d5e; color: #fff; border-bottom: 3px solid var(--ink); font: 500 15px var(--pixel); }
+  .dots { display: flex; gap: 5px; }
+  .dots i { width: 12px; height: 12px; border: 2px solid var(--ink); border-radius: 3px; background: #fff; display: block; }
+  .dots i:first-child { background: var(--yellow); } .dots i:nth-child(2) { background: #3ddc97; } .dots i:nth-child(3) { background: #2f6bff; }
+  .titlebar .t { flex: 1; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 14px 0; }
+  .chips button { font: 500 13px var(--pixel); background: #2a2148; color: var(--text); border: 2px solid #3b3166; border-radius: 6px; padding: 1px 9px; cursor: pointer; }
+  .chips button:hover { background: var(--yellow); color: var(--ink); border-color: var(--yellow); }
+
+  #term { flex: 1; overflow-y: auto; padding: 12px 14px 30px; cursor: text; color: var(--text); }
+  #out > div { white-space: pre-wrap; word-break: break-word; min-height: 1.6em; }
   .line { display: flex; flex-wrap: wrap; }
   .prompt { color: var(--green); white-space: pre; }
   .prompt b { color: var(--blue); font-weight: 400; }
-  #in { flex: 1; min-width: 120px; background: none; border: 0; outline: 0; color: var(--bright); font: inherit; caret-color: var(--red); }
-  .dir { color: var(--blue); font-weight: 700; }  .pdf { color: var(--red); }  .hid { color: var(--dim); }
-  .b { color: var(--bright); font-weight: 700; }  .d { color: var(--dim); }  .r { color: var(--red); }  .g { color: var(--green); }  .u { color: var(--blue); }
-  @media (max-width: 520px) { body { font-size: 12.5px; } }
+  #in { flex: 1; min-width: 120px; background: none; border: 0; outline: 0; color: var(--bright); font: inherit; caret-color: var(--yellow); }
+  a { color: var(--blue); }
+  .dir { color: var(--blue); font-weight: 700; } .pdf { color: var(--red); } .hid { color: var(--dim); }
+  .b { color: var(--bright); font-weight: 700; } .d { color: var(--dim); } .r { color: var(--red); } .g { color: var(--green); } .u { color: var(--blue); } .y { color: var(--yellow); }
+  .fetch { display: flex; gap: 22px; align-items: center; flex-wrap: wrap; white-space: normal !important; padding: 6px 0; }
+  .fetch pre { font: inherit; }
+
+  /* ---------- Buddy Alfie on the grass ---------- */
+  #buddy { position: fixed; z-index: 4; right: max(24px, calc(50% - 440px - 150px)); bottom: 40px; }
+  @media (max-width: 1100px) { #buddy { right: 12px; } }
+  @media (max-width: 640px) {
+    body { font-size: 12.5px; }
+    .win { top: 56px; bottom: 70px; width: calc(100vw - 16px); }
+    #buddy { display: none; }
+    .menubar .hide-sm { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { .cloud { animation: none; } }
 </style>
 </head>
 <body>
-  <div class="bar">
-    <div class="dots"><i></i><i></i><i></i></div>
-    <span class="title">alfie@alfieos: ~ — alfsh</span>
+  <div class="sun" aria-hidden="true"></div>
+  <div class="cloud c1" aria-hidden="true"></div>
+  <div class="cloud c2" aria-hidden="true"></div>
+  <div class="ground" aria-hidden="true"></div>
+
+  <div class="menubar">
+    <span class="logo"><img id="face" alt="">AlfieOS</span>
+    <span class="hide-sm">Terminal</span>
+    <span class="sp"></span>
     <a href="index.html">← Recruiter mode</a>
+    <span class="hide-sm" id="clock"></span>
   </div>
-  <div class="chips" aria-label="Suggested commands">
-    <button>help</button><button>ls ~/projects</button><button>cat about.txt</button>
-    <button>man alfie</button><button>neofetch</button><button>ping</button><button>open cv.pdf</button>
+
+  <div class="icons" aria-label="Desktop shortcuts">
+    <button class="icon" data-cmd="cat about.txt"><span class="pic" style="background:#ffd23f">📄</span><span>about.txt</span></button>
+    <button class="icon" data-cmd="ls ~/projects"><span class="pic" style="background:#6ea8ff">📁</span><span>projects</span></button>
+    <button class="icon" data-cmd="open cv.pdf"><span class="pic" style="background:#ff8fd8">CV</span><span>cv.pdf</span></button>
+    <button class="icon" data-cmd="man alfie"><span class="pic" style="background:#3ddc97">?</span><span>man alfie</span></button>
+    <button class="icon" data-cmd="sudo hire alfie"><span class="pic" style="background:#ff4d5e;color:#fff">★</span><span>hire.sh</span></button>
   </div>
-  <main id="term" aria-live="polite">
-    <div id="out"></div>
-    <div class="line"><span class="prompt" id="ps"></span><input id="in" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Terminal input" autofocus></div>
-  </main>
+
+  <section class="win" aria-label="Terminal">
+    <div class="titlebar"><div class="dots"><i></i><i></i><i></i></div><span class="t">alfie@alfieos: ~ — alfsh</span></div>
+    <div class="chips" aria-label="Suggested commands">
+      <button>help</button><button>ls ~/projects</button><button>cat about.txt</button>
+      <button>man alfie</button><button>neofetch</button><button>ping</button><button>open cv.pdf</button>
+    </div>
+    <main id="term" aria-live="polite">
+      <div id="out"></div>
+      <div class="line"><span class="prompt" id="ps"></span><input id="in" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Terminal input" autofocus></div>
+    </main>
+  </section>
+
+  <div id="buddy" data-alfie data-alfie-scale="7" data-alfie-left data-alfie-say="Type help!"></div>
 
   <script src="projects.js"></script>
   <script src="terminal.js"></script>
+  <script>
+    document.getElementById("face").src = AlfieSprite.faceURL(3);
+    const clock = document.getElementById("clock");
+    const tick = () => (clock.textContent = new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }));
+    tick(); setInterval(tick, 10000);
+  </script>
 </body>
 </html>
