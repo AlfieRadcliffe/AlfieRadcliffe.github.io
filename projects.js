@@ -50,28 +50,31 @@ window.PROJECTS = [
     ],
   },
   {
-    title: "Hand-drawn online party game",
-    status: "planned",
+    title: "Pen Golf",
+    status: "in-progress",
     featured: true,
     tagline:
-      "A multiplayer browser party game for friends to play together, with every character and scene drawn by hand.",
+      "An online party game: mini golf on notebook pages, where every player sabotages the course with hand-drawn traps.",
     problem:
-      "Online party games like Gartic Phone and Ultimate Chicken Horse are some of the most fun I've had with friends. " +
-      "I want to build one end to end: real-time networking, game design that's easy to pick up, and an art style that's mine.",
+      "Online party games like Ultimate Chicken Horse are some of the most fun I've had with friends. I want to build one " +
+      "end to end: multiplayer networking, game design that's easy to pick up, and an art style that's mine.",
     built:
-      "Players join a room with a short code from any browser, no download needed. The game stays in sync in real time " +
-      "over WebSockets, and all the art is drawn by me on paper, then scanned and cleaned up into black-and-white sprites.",
+      "Friends join a room with a short code from any browser. Before each hole, everyone secretly places a trap (ink blots, " +
+      "eraser walls, springs) and then takes turns putting. You only score if you sink it and someone else doesn't, so traps " +
+      "have to be mean but not impossible. All the art is drawn by me on paper, then scanned into black-and-white sprites.",
     hardest: "",
     metrics: [],
-    tags: ["JavaScript", "WebSockets", "Node.js", "HTML Canvas", "Game design"],
+    tags: ["JavaScript", "HTML Canvas", "Node.js", "WebSockets", "Game design"],
     milestones: [
-      { text: "Pick the game idea and sketch the rules on paper", done: false },
+      { text: "Pick the game idea and sketch the rules on paper", done: true },
+      { text: "Single player: drag to putt a ball around a page", done: false },
+      { text: "Courses: walls, a hole, and sinking the ball", done: false },
+      { text: "Traps: place them and make them affect the ball", done: false },
       { text: "Lobby: create a room, share a code, see who's joined", done: false },
-      { text: "Real-time sync between players over WebSockets", done: false },
-      { text: "Core game loop: rounds, scoring and a winner", done: false },
+      { text: "Multiplayer turns synced between players", done: false },
+      { text: "Rounds, scoring and a winner", done: false },
       { text: "Hand-drawn art scanned in and animated", done: false },
-      { text: "Playtest with friends, fix what confuses people", done: false },
-      { text: "Deploy online so anyone can play", done: false },
+      { text: "Playtest with friends and deploy online", done: false },
     ],
     media: null,
     links: [],
