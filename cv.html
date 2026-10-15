@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>Alfie Radcliffe — CV</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--
+  This is the source for cv.pdf. After editing, regenerate the PDF:
+    - open cv.html in Edge/Chrome -> Ctrl+P -> "Save as PDF",
+      Margins: None, Background graphics: on, save over cv.pdf
+    - or ask Claude to regenerate it.
+-->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #e5e7eb; color: #111827; font: 10pt/1.45 Inter, Arial, sans-serif; }
+  .page { width: 210mm; min-height: 297mm; margin: 0 auto; background: #fff; padding: 15mm 16mm; }
+  @media print { body { background: #fff; } .page { margin: 0; } }
+  a { color: #2563eb; text-decoration: none; }
+
+  header { border-bottom: 2.5px solid #2563eb; padding-bottom: 9px; margin-bottom: 12px; }
+  h1 { font-size: 24pt; letter-spacing: -0.02em; line-height: 1.1; }
+  h1 span { color: #dc2626; }
+  .role { color: #4b5563; font-size: 10.5pt; margin: 3px 0 6px; }
+  .contact { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 9pt; color: #374151; }
+
+  h2 { font-size: 9.5pt; text-transform: uppercase; letter-spacing: .12em; color: #2563eb; margin: 14px 0 6px; display: flex; align-items: center; gap: 8px; }
+  h2::after { content: ""; flex: 1; height: 1px; background: #e5e7eb; }
+  p { color: #374151; }
+  .entry { margin-bottom: 9px; }
+  .row { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+  .row b { font-size: 10.5pt; }
+  .row .date { color: #4b5563; font-size: 9pt; white-space: nowrap; }
+  .sub { color: #4b5563; font-style: italic; font-size: 9.5pt; }
+  ul { padding-left: 15px; margin-top: 3px; color: #374151; }
+  li { margin-bottom: 2px; }
+  .pill { display: inline-block; font-size: 7.5pt; font-weight: 600; color: #dc2626; border: 1px solid #fca5a5; border-radius: 99px; padding: 0 6px; margin-left: 6px; vertical-align: 1px; }
+  .skills { display: grid; grid-template-columns: 105px 1fr; gap: 3px 10px; }
+  .skills dt { font-weight: 600; }
+  .skills dd { color: #374151; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <h1>Alfie Radcliffe<span>.</span></h1>
+    <div class="role">Computer Science student · Seeking a 12-month industrial placement (2027–28)</div>
+    <div class="contact">
+      <a href="mailto:alfieradcliffe1234@gmail.com">alfieradcliffe1234@gmail.com</a>
+      <a href="https://alfieradcliffe.github.io">alfieradcliffe.github.io</a>
+      <a href="https://github.com/AlfieRadcliffe">github.com/AlfieRadcliffe</a>
+      <a href="https://www.linkedin.com/in/alfie-radcliffe-09584b27b/">linkedin.com/in/alfie-radcliffe-09584b27b</a>
+      <span>Newcastle upon Tyne · open to relocation</span>
+    </div>
+  </header>
+
+  <h2>Profile</h2>
+  <p>
+    Second-year Computer Science student at Newcastle University with a first-year average above 80%.
+    Strong in C, Python and Java, with a particular interest in systems programming — networking,
+    operating systems and performance-critical code. Currently building a real-time multiplayer game
+    server in C. Looking for a year in industry in a software engineering team where I can contribute
+    to production code and learn from experienced engineers.
+  </p>
+
+  <h2>Education</h2>
+  <div class="entry">
+    <div class="row"><b>Newcastle University — BSc Computer Science</b><span class="date">2025 – 2029</span></div>
+    <ul>
+      <li>First-year average: <b>80%+</b> (First Class)</li>
+      <li>Relevant modules: Security Programming, Algorithms, Networks</li>
+      <li>Degree includes a 12-month industrial placement year (2027–28)</li>
+    </ul>
+  </div>
+  <!-- TODO: A-levels / GCSEs
+  <div class="entry">
+    <div class="row"><b>[School name] — A-levels</b><span class="date">2023 – 2025</span></div>
+    <ul><li>[Subject] [Grade], [Subject] [Grade], [Subject] [Grade]</li>
+        <li>[N] GCSEs including Maths [grade] and English [grade]</li></ul>
+  </div> -->
+
+  <h2>Projects</h2>
+  <div class="entry">
+    <div class="row"><b>Real-time multiplayer game server<span class="pill">In progress</span></b><span class="date">C · UDP · Linux</span></div>
+    <ul>
+      <li>Authoritative game server in C communicating over UDP with a custom binary packet format</li>
+      <li>Fixed-timestep simulation with client-side prediction, server reconciliation and lag compensation</li>
+      <li>Applies concepts from my Networks module to a latency-sensitive, real-world problem</li>
+    </ul>
+  </div>
+  <div class="entry">
+    <div class="row"><b>Hobby x86 operating system<span class="pill">Planned</span></b><span class="date">C · x86 Assembly · QEMU</span></div>
+    <ul>
+      <li>Kernel written from scratch: interrupt handling, keyboard driver, paging and a kernel heap</li>
+      <li>Pre-emptive round-robin scheduler and a simple interactive shell</li>
+    </ul>
+  </div>
+  <div class="entry">
+    <div class="row"><b>Personal portfolio website</b><span class="date">HTML · CSS · JavaScript</span></div>
+    <ul>
+      <li>Hand-built, responsive site with light/dark themes and data-driven project pages, hosted on GitHub Pages</li>
+    </ul>
+  </div>
+
+  <h2>Experience</h2>
+  <div class="entry">
+    <!-- TODO: put the month/year in the date span, e.g. "Jul 2024" -->
+    <div class="row"><b>TUBR — Work Experience</b><span class="date">1 week</span></div>
+    <div class="sub">AI &amp; predictive-analytics startup, Sheffield</div>
+    <ul>
+      <li>Week of work experience at a machine-learning startup building demand-forecasting software for hospitality businesses</li>
+      <!-- TODO: add 1–2 bullets about what you did/learned -->
+    </ul>
+  </div>
+
+  <h2>Technical Skills</h2>
+  <dl class="skills">
+    <dt>Languages</dt><dd>C, Python, Java, HTML, CSS (strong) · SQL</dd>
+    <dt>Concepts</dt><dd>Algorithms &amp; data structures, networking (TCP/UDP, sockets), secure programming</dd>
+    <dt>Tools</dt><dd>Git &amp; GitHub, Linux, VS Code</dd>
+  </dl>
+
+</div>
+</body>
+</html>
