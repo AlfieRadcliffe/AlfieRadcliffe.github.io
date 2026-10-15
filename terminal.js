@@ -278,7 +278,7 @@ AlfieOS 2.0                       ${new Date().getFullYear()}                   
         const t0 = performance.now();
         try {
           await Promise.race([
-            fetch(`${base}/favicon.ico?ping=${Date.now()}`, { mode: "no-cors", cache: "no-store" }),
+            fetch(`${base}/${self ? "sprite.js" : "favicon.ico"}?ping=${Date.now()}`, { mode: "no-cors", cache: "no-store" }),
             new Promise((_, rej) => setTimeout(() => rej(new Error("timeout")), 3000)),
           ]);
           const ms = performance.now() - t0;
