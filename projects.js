@@ -50,7 +50,7 @@ window.PROJECTS = [
     ],
   },
   {
-    title: "Pen Golf",
+    title: "Doodle Golf",
     status: "in-progress",
     featured: true,
     tagline:
@@ -80,7 +80,7 @@ window.PROJECTS = [
       { text: "Hand-drawn art scanned in and animated", done: false },
       { text: "Playtest with friends and deploy online", done: false },
     ],
-    media: "assets/projects/pen-golf.png",
+    media: "assets/projects/doodle-golf.png",
     links: [{ label: "Source code", url: "https://github.com/AlfieRadcliffe/DoodleGolf" }],
   },
 ];
