@@ -71,7 +71,8 @@
   .project:nth-child(even) { transform: rotate(.6deg); } .project:nth-child(odd) { transform: rotate(-.5deg); }
   .project .inner { display: grid; grid-template-columns: 1fr 1.2fr; gap: 28px; }
   @media (max-width: 880px) { .project .inner { grid-template-columns: 1fr; } }
-  .media { border: 2.5px solid var(--ink); border-radius: var(--wobbly-2); padding: 14px 16px; min-height: 200px; background: #fff; }
+  .media { align-self: start; border: 2.5px solid var(--ink); border-radius: var(--wobbly-2); padding: 14px 16px; min-height: 200px; background: #fff; }
+  .media:has(img), .media:has(video) { padding: 6px; min-height: 0; transform: rotate(-1.5deg); }
   .media img, .media video { width: 100%; display: block; border-radius: 4px; }
   .media h4 { font: 700 26px var(--hand); display: flex; justify-content: space-between; margin-bottom: 6px; }
   .media .checklist { font-size: 18px; }
@@ -405,7 +406,7 @@
 
   function featured(p) {
     const dl = el("dl");
-    [["why?", p.problem], ["what I'm building", p.built], ["hardest part", p.hardest]].forEach(([k, v]) => {
+    [["why?", p.problem], [p.status === "complete" ? "what I built" : "what I'm building", p.built], ["hardest part", p.hardest]].forEach(([k, v]) => {
       if (has(v)) dl.append(el("dt", {}, k), el("dd", {}, v));
     });
     return el("article", { class: "sheet taped project" },

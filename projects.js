@@ -24,6 +24,32 @@
 
 window.PROJECTS = [
   {
+    title: "AlfieOS: this portfolio",
+    status: "complete",
+    featured: true,
+    tagline:
+      "A portfolio that boots like an operating system, set in a notebook and starring a character I drew myself.",
+    problem:
+      "Most student portfolios look the same. I wanted mine to show both sides of what I care about: a working " +
+      "terminal for the technical side, and a hand-drawn, characterful design for the HCI side, without making " +
+      "it any slower for a recruiter to read.",
+    built:
+      "A boot screen with a mode picker, a recruiter-friendly notebook page, and a terminal mode with a fake " +
+      "filesystem (ls, cd, cat, man, tab completion, history and a real network ping). My drawing is split into " +
+      "layers and animated at a choppy 7 frames a second with an SVG \"line boil\" filter, so it feels hand-animated.",
+    hardest:
+      "Keeping it playful without hurting usability. Every gimmick is skippable, the layout works on phones, " +
+      "animation stops for people who turn on reduced motion, and the whole thing runs with no frameworks.",
+    metrics: ["0 frameworks", "works on phones", "reduced-motion friendly"],
+    tags: ["HTML", "CSS", "JavaScript", "SVG filters", "GitHub Pages"],
+    milestones: [],
+    media: "assets/projects/alfieos.png",
+    links: [
+      { label: "Try the terminal", url: "terminal.html" },
+      { label: "Source code", url: "https://github.com/AlfieRadcliffe/AlfieRadcliffe.github.io" },
+    ],
+  },
+  {
     title: "Real-time multiplayer game server",
     status: "in-progress",
     featured: true,

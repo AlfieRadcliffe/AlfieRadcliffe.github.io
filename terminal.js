@@ -65,7 +65,7 @@ Tip: run "open email", "open github" or "open linkedin".`,
     const st = { "in-progress": "IN PROGRESS", planned: "PLANNED", complete: "COMPLETE" }[p.status] || p.status;
     let s = `# ${p.title}   [${st}]\n${p.tagline}\n`;
     if (p.problem) s += `\nWHY\n${p.problem}\n`;
-    if (p.built) s += `\nWHAT I'M BUILDING\n${p.built}\n`;
+    if (p.built) s += `\n${p.status === "complete" ? "WHAT I BUILT" : "WHAT I'M BUILDING"}\n${p.built}\n`;
     if (p.hardest) s += `\nHARDEST PART\n${p.hardest}\n`;
     if (p.milestones && p.milestones.length) {
       const done = p.milestones.filter((m) => m.done).length;
